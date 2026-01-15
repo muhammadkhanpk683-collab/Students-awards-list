@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Award List - Sajjad Ali Humdard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        @page { size: A4 portrait; margin: 10mm 5mm; }
+        
+        :root {
+            --primary: #3498db;
+            --excel: #1d6f42;
+            --pdf: #e74c3c;
+            --bg: #f4f7f6;
+        }
+
+        body { 
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; 
+            margin: 0; padding: 0; background: var(--bg); color: #333; 
+            line-height: 1.4;
+        }
+
+        /* User Guide Styling */
+        .user-guide {
+            background: #fff;
+            border-left: 4px solid var(--primary);
+            margin: 10px auto;
+            padding: 12px;
+            width: 95%;
+            max-width: 210mm;
+            border-radius: 4px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            font-size: 0.85rem;
+        }
+        .user-guide h4 { margin: 0 0 8px 0; color: var(--primary); display: flex; align-items: center; gap: 8px; }
+        .guide-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; }
+        .guide-item { display: flex; align-items: flex-start; gap: 8px; color: #555; }
+        .guide-item i { color: var(--primary); margin-top: 3px; }
+
+        .action-bar { 
+            position: sticky; top: 0; background: #fff; 
+            padding: 10px; display: flex; justify-content: center; 
+            gap: 8px; z-index: 1000; box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            flex-wrap: wrap;
+        }
+
+        .btn { 
+            padding: 10px 14px; border: none; border-radius: 6px; 
+            font-weight: bold; cursor: pointer; color: #fff; 
+            display: flex; align-items: center; gap: 6px; font-size: 12px;
+        }
+
+        .wrapper { 
+            background: #fff; width: 95%; max-width: 210mm;
+            margin: 5px auto 15px auto; padding: 15px; box-sizing: border-box;
+            border-radius: 8px; box-shadow: 0 0 15px rgba(0,0,0,0.05);
+        }
+
+        .header h1 { 
+            font-size: clamp(1.1rem, 4vw, 1.4rem); 
+            text-align: center; text-decoration: underline; 
+            margin: 0 0 15px 0; text-transform: uppercase; 
+        }
+
+        .meta-data { 
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); 
+            gap: 10px; margin-bottom: 15px; font-weight: bold; font-size: 0.85rem; 
+        }
+        .edit-line { border-bottom: 1px solid #000; padding: 2px 5px; outline: none; min-width: 100px; display: inline-block; }
+
+        .table-container { 
+            width: 100%; overflow-x: auto; 
+            border: 1px solid #000; border-radius: 4px;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        table { width: 100%; border-collapse: collapse; min-width: 750px; }
+        thead { display: table-header-group; }
+        th, td { border: 1px solid #000; text-align: center; padding: 6px 4px; font-size: 11px; }
+        th { background: #f8f9fa !important; -webkit-print-color-adjust: exact; }
+
+        .auto-grow { min-width: 20px; outline: none; display: block; width: 100%; }
+        .name-cell { text-align: left !important; min-width: 120px; }
+        .num-input { font-weight: bold; color: #2c3e50; }
+
+        .footer-section { border: 1px solid #000; border-top: none; padding: 15px; background: #fff; page-break-inside: avoid; }
+        
+        .stats-grid { 
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); 
+            gap: 10px; font-weight: bold; font-size: 0.85rem; 
+        }
+        .stat-val { border-bottom: 1.5px solid #000; min-width: 30px; display: inline-block; text-align: center; padding: 0 5px; }
+
+        .signature-area { 
+            display: flex; justify-content: space-around; 
+            margin-top: 45px; gap: 10px; flex-wrap: wrap;
+        }
+        .sig-box { 
+            border-top: 1.5px solid #000; 
+            width: 180px; 
+            text-align: center; font-weight: bold; 
+            font-size: 0.8rem; padding-top: 5px;
+            margin-bottom: 10px;
+        }
+
+        .credits { text-align: center; margin-top: 25px; font-size: 0.8rem; border-top: 1px solid #eee; padding-top: 10px; }
+        .wa-link { color: #25D366; text-decoration: none; font-weight: bold; display: inline-flex; align-items: center; gap: 4px; }
+        .full-num-reveal { display: none; }
+
+        @media screen and (max-width: 600px) {
+            .wrapper, .user-guide { width: 100%; border-radius: 0; margin: 0; }
+            .btn { flex: 1; justify-content: center; }
+            .sig-box { width: 40%; }
+        }
+
+        @media print {
+            .action-bar, .user-guide { display: none; }
+            .wrapper { width: 100%; box-shadow: none; margin: 0; padding: 0; border: none; }
+            body { background: #fff; }
+            .full-num-reveal { display: inline !important; }
+            .wa-link i { display: none; }
+            .wa-link { color: #000; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="action-bar">
+    <button class="btn" style="background:var(--pdf)" onclick="window.print()"><i class="fas fa-file-pdf"></i> PDF</button>
+    <button class="btn" style="background:var(--excel)" onclick="exportToExcel('mainAwardTable')"><i class="fas fa-file-excel"></i> Excel</button>
+    <button class="btn" style="background:var(--primary)" onclick="clearAll()"><i class="fas fa-redo"></i> Reset</button>
+</div>
+
+<div class="user-guide">
+    <h4><i class="fas fa-info-circle"></i> Quick User Guide</h4>
+    <div class="guide-grid">
+        <div class="guide-item">
+            <i class="fas fa-keyboard"></i>
+            <span><strong>Marks:</strong> Type marks in subject cells. Results calculate automatically. Total turns <span style="color:red">Red</span> if failed.</span>
+        </div>
+        <div class="guide-item">
+            <i class="fas fa-plus-circle"></i>
+            <span><strong>Rows:</strong> Type a student name in the last row to automatically add a new blank row.</span>
+        </div>
+        <div class="guide-item">
+            <i class="fas fa-download"></i>
+            <span><strong>Saving:</strong> Click <b>PDF</b> or <b>Excel</b>. Contact details will appear automatically in the saved file.</span>
+        </div>
+    </div>
+</div>
+
+<div class="wrapper">
+    <div class="header">
+        <h1 contenteditable="true">Winter Semester Exam 2026 Dir Upper</h1>
+    </div>
+
+    <div class="meta-data">
+        <div>Class: <span class="edit-line" contenteditable="true">4th</span></div>
+        <div>School: <span class="edit-line" contenteditable="true">G.P.S Salobaig</span></div>
+        <div>Exam: <span class="edit-line" contenteditable="true">Winter Exam</span></div>
+    </div>
+
+    <div class="table-container">
+        <table id="mainAwardTable">
+            <thead>
+                <tr>
+                    <th rowspan="2">R.N</th>
+                    <th rowspan="2">Student Name</th>
+                    <th rowspan="2">Father Name</th>
+                    <th rowspan="2">Eng</th><th rowspan="2">Urd</th><th rowspan="2">Mat</th><th rowspan="2">Sci</th>
+                    <th colspan="2">Isl+NQ</th>
+                    <th rowspan="2">Psh</th><th rowspan="2">S.S</th><th rowspan="2">D.G</th>
+                    <th rowspan="2">Total</th>
+                </tr>
+                <tr>
+                    <th>Isl</th><th>NQ</th>
+                </tr>
+            </thead>
+            <tbody id="tableBody"></tbody>
+        </table>
+    </div>
+
+    <div class="footer-section">
+        <div class="stats-grid">
+            <div>Students Appeared: <span class="stat-val" id="totalApp">0</span></div>
+            <div>Passed: <span class="stat-val" id="totalPass">0</span></div>
+            <div>Failed: <span class="stat-val" id="totalFail">0</span></div>
+            <div>Pass %: <span class="stat-val" id="totalPerc">0</span></div>
+        </div>
+
+        <div class="signature-area">
+            <div class="sig-box">Class Teacher signature</div>
+            <div class="sig-box">Hd teacher signature</div>
+        </div>
+        
+        <div class="credits">
+            <div><strong>Designed by: Sajjad Ali Humdard</strong></div>
+            <a href="https://wa.me/923073736743" class="wa-link" target="_blank">
+                <i class="fab fa-whatsapp"></i> WhatsApp<span class="full-num-reveal">: +92 307 3736743</span>
+            </a>
+        </div>
+    </div>
+</div>
+
+<script>
+    const tableBody = document.getElementById('tableBody');
+    const PASS_MARK = 264;
+
+    function createRow(num) {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+            <td>${num}</td>
+            <td><span class="auto-grow name-cell" contenteditable="true" oninput="handleAutoRow(this)"></span></td>
+            <td><span class="auto-grow name-cell" contenteditable="true"></span></td>
+            ${Array(4).fill('<td><span class="auto-grow num-input" contenteditable="true" inputmode="decimal" oninput="updateRow(this)"></span></td>').join('')}
+            <td><span class="auto-grow num-input" contenteditable="true" inputmode="decimal" oninput="limit50(this);updateRow(this)"></span></td>
+            <td><span class="auto-grow num-input" contenteditable="true" inputmode="decimal" oninput="limit50(this);updateRow(this)"></span></td>
+            ${Array(3).fill('<td><span class="auto-grow num-input" contenteditable="true" inputmode="decimal" oninput="updateRow(this)"></span></td>').join('')}
+            <td style="font-weight:bold" class="total-cell"></td>
+        `;
+        tableBody.appendChild(tr);
+    }
+
+    function limit50(el) { if(parseInt(el.innerText) > 50) el.innerText = "50"; }
+
+    function handleAutoRow(el) {
+        if (el.closest('tr') === tableBody.lastElementChild && el.innerText.trim() !== "") {
+            createRow(tableBody.rows.length + 1);
+        }
+        refreshStats();
+    }
+
+    function updateRow(el) {
+        const row = el.closest('tr');
+        const cells = row.querySelectorAll('.num-input');
+        let sum = 0, hasData = false;
+        cells.forEach(c => {
+            let v = parseInt(c.innerText);
+            if(!isNaN(v)) { sum += v; hasData = true; }
+        });
+        const totalCell = row.querySelector('.total-cell');
+        if (hasData) {
+            totalCell.innerText = sum;
+            totalCell.style.color = sum < PASS_MARK ? '#e74c3c' : '#000';
+        } else { totalCell.innerText = ""; }
+        refreshStats();
+    }
+
+    function refreshStats() {
+        let app = 0, fail = 0;
+        Array.from(tableBody.rows).forEach(row => {
+            const name = row.querySelector('.name-cell').innerText.trim();
+            const total = parseInt(row.querySelector('.total-cell').innerText);
+            if (name !== "") {
+                app++;
+                if (!isNaN(total) && total < PASS_MARK) fail++;
+            }
+        });
+        const pass = app - fail;
+        document.getElementById('totalApp').innerText = app;
+        document.getElementById('totalFail').innerText = fail;
+        document.getElementById('totalPass').innerText = pass;
+        document.getElementById('totalPerc').innerText = app ? Math.round((pass/app)*100) + "%" : "0%";
+    }
+
+    function clearAll() {
+        if(confirm("Erase all data?")) {
+            tableBody.innerHTML = "";
+            for(let i=1; i<=10; i++) createRow(i);
+            refreshStats();
+        }
+    }
+
+    function exportToExcel(tableID) {
+        let table = document.getElementById(tableID);
+        let clone = table.cloneNode(true);
+        let html = "<h3>Award List - 2026</h3>" + clone.outerHTML + "<p>Designed by Sajjad Ali Humdard: +923073736743</p>";
+        let blob = new Blob([html], {type: 'application/vnd.ms-excel'});
+        let link = document.createElement("a");
+        link.href = URL.createObjectURL(blob);
+        link.download = "Award_List_Sajjad_Ali.xls";
+        link.click();
+    }
+
+    for(let i=1; i<=10; i++) createRow(i);
+</script>
+</body>
+</html>
