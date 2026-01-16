@@ -2,179 +2,136 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Award List - Sajjad Ali Humdard</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Award List Manager - Official</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        @page { size: A4 portrait; margin: 10mm 5mm; }
+        @page { size: A4 portrait; margin: 5mm; }
+        :root { 
+            --primary: #3498db; --excel: #1d6f42; --pdf: #e74c3c; --bg: #f0f2f5; --danger: #e74c3c;
+            --head-color: #f1f5f9; --guide-bg: #e0f2fe;
+        }
         
-        :root {
-            --primary: #3498db;
-            --excel: #1d6f42;
-            --pdf: #e74c3c;
-            --bg: #f4f7f6;
-        }
-
-        body { 
-            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; 
-            margin: 0; padding: 0; background: var(--bg); color: #333; 
-            line-height: 1.4;
-        }
-
-        /* User Guide Styling */
-        .user-guide {
-            background: #fff;
-            border-left: 4px solid var(--primary);
-            margin: 10px auto;
-            padding: 12px;
-            width: 95%;
-            max-width: 210mm;
-            border-radius: 4px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-            font-size: 0.85rem;
-        }
-        .user-guide h4 { margin: 0 0 8px 0; color: var(--primary); display: flex; align-items: center; gap: 8px; }
-        .guide-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; }
-        .guide-item { display: flex; align-items: flex-start; gap: 8px; color: #555; }
-        .guide-item i { color: var(--primary); margin-top: 3px; }
-
+        body { font-family: 'Segoe UI', sans-serif; margin: 0; padding: 0; background: var(--bg); color: #333; }
+        
+        /* Action Bar */
         .action-bar { 
-            position: sticky; top: 0; background: #fff; 
-            padding: 10px; display: flex; justify-content: center; 
-            gap: 8px; z-index: 1000; box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            flex-wrap: wrap;
+            position: sticky; top: 0; background: #fff; padding: 10px; 
+            display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; 
+            z-index: 1000; box-shadow: 0 2px 10px rgba(0,0,0,0.1);
         }
-
         .btn { 
-            padding: 10px 14px; border: none; border-radius: 6px; 
+            padding: 10px 16px; border: none; border-radius: 6px; 
             font-weight: bold; cursor: pointer; color: #fff; 
-            display: flex; align-items: center; gap: 6px; font-size: 12px;
+            display: flex; align-items: center; gap: 8px; font-size: 13px; text-decoration: none;
         }
 
+        /* NEW BASICS USER GUIDE */
+        .user-guide {
+            max-width: 210mm; margin: 15px auto; padding: 20px;
+            background: var(--guide-bg); border: 1.5px solid #7dd3fc;
+            border-radius: 12px; font-size: 0.95rem; line-height: 1.5;
+        }
+        .user-guide h2 { margin-top: 0; font-size: 1.1rem; color: #0369a1; border-bottom: 2px solid #7dd3fc; padding-bottom: 5px; margin-bottom: 15px; }
+        .guide-list { list-style: none; padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        .guide-list li { display: flex; align-items: flex-start; gap: 10px; }
+        .guide-list i { color: #0284c7; margin-top: 4px; font-size: 1rem; }
+
+        /* Main Wrapper */
         .wrapper { 
             background: #fff; width: 95%; max-width: 210mm;
-            margin: 5px auto 15px auto; padding: 15px; box-sizing: border-box;
-            border-radius: 8px; box-shadow: 0 0 15px rgba(0,0,0,0.05);
+            margin: 20px auto; padding: 15px; box-sizing: border-box;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1); border-radius: 8px;
         }
 
-        .header h1 { 
-            font-size: clamp(1.1rem, 4vw, 1.4rem); 
-            text-align: center; text-decoration: underline; 
-            margin: 0 0 15px 0; text-transform: uppercase; 
-        }
+        .header h1 { font-size: 1.2rem; text-align: center; text-decoration: underline; margin-bottom: 15px; font-weight: 800; outline: none; }
+        .meta-line { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 10px; margin-bottom: 15px; font-weight: bold; font-size: 0.85rem; }
+        .edit-line { border-bottom: 1px solid #000; padding: 0 5px; outline: none; min-width: 80px; display: inline-block; font-weight: bold; color: #000; }
 
-        .meta-data { 
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); 
-            gap: 10px; margin-bottom: 15px; font-weight: bold; font-size: 0.85rem; 
-        }
-        .edit-line { border-bottom: 1px solid #000; padding: 2px 5px; outline: none; min-width: 100px; display: inline-block; }
+        .table-container { width: 100%; overflow-x: auto; border: 1.5px solid #000; }
+        table { width: 100%; border-collapse: collapse; min-width: 850px; }
+        th, td { border: 1px solid #000; text-align: center; padding: 0; font-size: 11px; height: 32px; }
+        th { background-color: var(--head-color) !important; font-weight: bold; outline: none; }
 
-        .table-container { 
-            width: 100%; overflow-x: auto; 
-            border: 1px solid #000; border-radius: 4px;
-            -webkit-overflow-scrolling: touch;
-        }
+        .entry-span { outline: none; display: flex; align-items: center; justify-content: center; width: 100%; height: 100%; font-weight: bold; color: #000; }
+        .name-cell { text-align: left !important; padding-left: 8px !important; }
 
-        table { width: 100%; border-collapse: collapse; min-width: 750px; }
-        thead { display: table-header-group; }
-        th, td { border: 1px solid #000; text-align: center; padding: 6px 4px; font-size: 11px; }
-        th { background: #f8f9fa !important; -webkit-print-color-adjust: exact; }
-
-        .auto-grow { min-width: 20px; outline: none; display: block; width: 100%; }
-        .name-cell { text-align: left !important; min-width: 120px; }
-        .num-input { font-weight: bold; color: #2c3e50; }
-
-        .footer-section { border: 1px solid #000; border-top: none; padding: 15px; background: #fff; page-break-inside: avoid; }
+        /* Footer */
+        .footer-section { border: 1.5px solid #000; border-top: none; padding: 12px; background: #fff; }
+        .stats-line { display: flex; justify-content: space-between; align-items: center; font-weight: bold; font-size: 0.85rem; margin-bottom: 15px; padding: 10px 0; border-bottom: 1px dashed #000; }
+        .stat-val { font-weight: 900; text-decoration: underline; margin-left: 4px; }
         
-        .stats-grid { 
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); 
-            gap: 10px; font-weight: bold; font-size: 0.85rem; 
-        }
-        .stat-val { border-bottom: 1.5px solid #000; min-width: 30px; display: inline-block; text-align: center; padding: 0 5px; }
+        .signature-area { display: flex; justify-content: space-around; margin-top: 45px; margin-bottom: 15px; gap: 20px; }
+        .sig-box { border-top: 1.5px solid #000; width: 220px; text-align: center; font-weight: bold; font-size: 0.85rem; padding-top: 5px; outline: none; }
+        
+        /* Personal info row - HIDDEN IN EXPORT/PDF */
+        .personal-info { display: flex; justify-content: space-between; align-items: center; font-size: 0.8rem; color: #444; border-top: 1px solid #eee; padding-top: 8px; }
+        .wa-link { color: #25D366; text-decoration: none; font-weight: 600; display: flex; align-items: center; gap: 5px; }
 
-        .signature-area { 
-            display: flex; justify-content: space-around; 
-            margin-top: 45px; gap: 10px; flex-wrap: wrap;
-        }
-        .sig-box { 
-            border-top: 1.5px solid #000; 
-            width: 180px; 
-            text-align: center; font-weight: bold; 
-            font-size: 0.8rem; padding-top: 5px;
-            margin-bottom: 10px;
-        }
-
-        .credits { text-align: center; margin-top: 25px; font-size: 0.8rem; border-top: 1px solid #eee; padding-top: 10px; }
-        .wa-link { color: #25D366; text-decoration: none; font-weight: bold; display: inline-flex; align-items: center; gap: 4px; }
-        .full-num-reveal { display: none; }
-
-        @media screen and (max-width: 600px) {
-            .wrapper, .user-guide { width: 100%; border-radius: 0; margin: 0; }
-            .btn { flex: 1; justify-content: center; }
-            .sig-box { width: 40%; }
-        }
-
+        /* PRINT CONTROLS */
         @media print {
-            .action-bar, .user-guide { display: none; }
-            .wrapper { width: 100%; box-shadow: none; margin: 0; padding: 0; border: none; }
-            body { background: #fff; }
-            .full-num-reveal { display: inline !important; }
-            .wa-link i { display: none; }
-            .wa-link { color: #000; }
+            .action-bar, .user-guide, .col-del, .btn-del-cell, .personal-info { display: none !important; }
+            .wrapper { width: 100%; margin: 0; box-shadow: none; padding: 0; }
+            table { min-width: 100%; }
+        }
+
+        @media (max-width: 600px) {
+            .guide-list { grid-template-columns: 1fr; }
+            .stats-line { flex-direction: column; align-items: flex-start; gap: 8px; }
         }
     </style>
 </head>
 <body>
 
 <div class="action-bar">
-    <button class="btn" style="background:var(--pdf)" onclick="window.print()"><i class="fas fa-file-pdf"></i> PDF</button>
-    <button class="btn" style="background:var(--excel)" onclick="exportToExcel('mainAwardTable')"><i class="fas fa-file-excel"></i> Excel</button>
-    <button class="btn" style="background:var(--primary)" onclick="clearAll()"><i class="fas fa-redo"></i> Reset</button>
+    <button class="btn" style="background:var(--pdf)" onclick="window.print()"><i class="fas fa-print"></i> PDF/Print</button>
+    <button class="btn" style="background:var(--excel)" onclick="exportToExcel()"><i class="fas fa-file-excel"></i> Excel Download</button>
+    <button class="btn" style="background:var(--primary)" onclick="location.reload()"><i class="fas fa-sync"></i> Reset</button>
 </div>
 
 <div class="user-guide">
-    <h4><i class="fas fa-info-circle"></i> Quick User Guide</h4>
-    <div class="guide-grid">
-        <div class="guide-item">
-            <i class="fas fa-keyboard"></i>
-            <span><strong>Marks:</strong> Type marks in subject cells. Results calculate automatically. Total turns <span style="color:red">Red</span> if failed.</span>
-        </div>
-        <div class="guide-item">
-            <i class="fas fa-plus-circle"></i>
-            <span><strong>Rows:</strong> Type a student name in the last row to automatically add a new blank row.</span>
-        </div>
-        <div class="guide-item">
-            <i class="fas fa-download"></i>
-            <span><strong>Saving:</strong> Click <b>PDF</b> or <b>Excel</b>. Contact details will appear automatically in the saved file.</span>
-        </div>
-    </div>
+    <h2><i class="fas fa-star"></i> Essential Basics</h2>
+    <ul class="guide-list">
+        <li><i class="fas fa-mouse-pointer"></i> <strong>Click to Edit:</strong> Every heading, school name, and data cell is directly editable. Just click and type.</li>
+        <li><i class="fas fa-magic"></i> <strong>Auto-Add Rows:</strong> Once you type a name in the bottom row, a new blank row will appear automatically.</li>
+        <li><i class="fas fa-calculator"></i> <strong>Live Calculations:</strong> Totals and stats update instantly. Failures are automatically marked in <span style="color:red">RED</span>.</li>
+        <li><i class="fas fa-eye-slash"></i> <strong>Privacy Guard:</strong> All technical info and this guide are removed from your official downloads.</li>
+    </ul>
 </div>
 
-<div class="wrapper">
+<div class="wrapper" id="printArea">
     <div class="header">
-        <h1 contenteditable="true">Winter Semester Exam 2026 Dir Upper</h1>
+        <h1 contenteditable="true">WINTER SEMESTER EXAM 2026 - AWARD LIST</h1>
     </div>
 
-    <div class="meta-data">
-        <div>Class: <span class="edit-line" contenteditable="true">4th</span></div>
-        <div>School: <span class="edit-line" contenteditable="true">G.P.S Salobaig</span></div>
-        <div>Exam: <span class="edit-line" contenteditable="true">Winter Exam</span></div>
+    <div class="meta-line">
+        <div class="meta-item">SCHOOL: <span class="edit-line" contenteditable="true">G.P.S Salobaig</span></div>
+        <div class="meta-item">CLASS: <span class="edit-line" contenteditable="true">4th</span></div>
+        <div class="meta-item">EXAM: <span class="edit-line" contenteditable="true">Winter Exam</span></div>
+        <div class="meta-item">DISTRICT: <span class="edit-line" contenteditable="true">Dir Upper</span></div>
     </div>
 
     <div class="table-container">
-        <table id="mainAwardTable">
+        <table>
             <thead>
                 <tr>
-                    <th rowspan="2">R.N</th>
-                    <th rowspan="2">Student Name</th>
-                    <th rowspan="2">Father Name</th>
-                    <th rowspan="2">Eng</th><th rowspan="2">Urd</th><th rowspan="2">Mat</th><th rowspan="2">Sci</th>
-                    <th colspan="2">Isl+NQ</th>
-                    <th rowspan="2">Psh</th><th rowspan="2">S.S</th><th rowspan="2">D.G</th>
-                    <th rowspan="2">Total</th>
+                    <th rowspan="2" class="col-del">DEL</th>
+                    <th rowspan="2" style="width:35px" contenteditable="true">R.N</th>
+                    <th rowspan="2" contenteditable="true">STUDENT NAME</th>
+                    <th rowspan="2" contenteditable="true">FATHER NAME</th>
+                    <th rowspan="2" contenteditable="true">ENG</th>
+                    <th rowspan="2" contenteditable="true">URD</th>
+                    <th rowspan="2" contenteditable="true">MAT</th>
+                    <th rowspan="2" contenteditable="true">SCI</th>
+                    <th colspan="2" contenteditable="true">ISL + NQ</th>
+                    <th rowspan="2" contenteditable="true">PSH</th>
+                    <th rowspan="2" contenteditable="true">S.S</th>
+                    <th rowspan="2" contenteditable="true">D.G</th>
+                    <th rowspan="2" contenteditable="true">TOTAL</th>
                 </tr>
                 <tr>
-                    <th>Isl</th><th>NQ</th>
+                    <th contenteditable="true">ISL</th>
+                    <th contenteditable="true">NQ</th>
                 </tr>
             </thead>
             <tbody id="tableBody"></tbody>
@@ -182,53 +139,74 @@
     </div>
 
     <div class="footer-section">
-        <div class="stats-grid">
-            <div>Students Appeared: <span class="stat-val" id="totalApp">0</span></div>
-            <div>Passed: <span class="stat-val" id="totalPass">0</span></div>
-            <div>Failed: <span class="stat-val" id="totalFail">0</span></div>
-            <div>Pass %: <span class="stat-val" id="totalPerc">0</span></div>
-        </div>
-
-        <div class="signature-area">
-            <div class="sig-box">Class Teacher signature</div>
-            <div class="sig-box">Hd teacher signature</div>
+        <div class="stats-line">
+            <div class="stat-item">STUDENTS APPEARED:<span class="stat-val" id="totalApp">0</span></div>
+            <div class="stat-item">PASSED:<span class="stat-val" id="totalPass">0</span></div>
+            <div class="stat-item">FAILED:<span class="stat-val" id="totalFail">0</span></div>
+            <div class="stat-item">PASS %:<span class="stat-val" id="totalPerc">0%</span></div>
         </div>
         
-        <div class="credits">
-            <div><strong>Designed by: Sajjad Ali Humdard</strong></div>
-            <a href="https://wa.me/923073736743" class="wa-link" target="_blank">
-                <i class="fab fa-whatsapp"></i> WhatsApp<span class="full-num-reveal">: +92 307 3736743</span>
-            </a>
+        <div class="signature-area">
+            <div class="sig-box" contenteditable="true">Class Teacher Signature</div>
+            <div class="sig-box" contenteditable="true">Head Teacher Signature</div>
+        </div>
+        
+        <div class="personal-info" id="exportHiddenInfo">
+            <div>Sajjad Ali Humdard</div>
+            <div>
+                <a href="https://wa.me/923073736743" class="wa-link">
+                    <i class="fab fa-whatsapp"></i> WhatsApp Support
+                </a>
+            </div>
         </div>
     </div>
 </div>
 
 <script>
-    const tableBody = document.getElementById('tableBody');
     const PASS_MARK = 264;
 
-    function createRow(num) {
-        const tr = document.createElement('tr');
-        tr.innerHTML = `
-            <td>${num}</td>
-            <td><span class="auto-grow name-cell" contenteditable="true" oninput="handleAutoRow(this)"></span></td>
-            <td><span class="auto-grow name-cell" contenteditable="true"></span></td>
-            ${Array(4).fill('<td><span class="auto-grow num-input" contenteditable="true" inputmode="decimal" oninput="updateRow(this)"></span></td>').join('')}
-            <td><span class="auto-grow num-input" contenteditable="true" inputmode="decimal" oninput="limit50(this);updateRow(this)"></span></td>
-            <td><span class="auto-grow num-input" contenteditable="true" inputmode="decimal" oninput="limit50(this);updateRow(this)"></span></td>
-            ${Array(3).fill('<td><span class="auto-grow num-input" contenteditable="true" inputmode="decimal" oninput="updateRow(this)"></span></td>').join('')}
-            <td style="font-weight:bold" class="total-cell"></td>
-        `;
-        tableBody.appendChild(tr);
+    function addRows(count) {
+        const tableBody = document.getElementById('tableBody');
+        for(let i=0; i<count; i++) {
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+                <td class="btn-del-cell"><button onclick="deleteRow(this)" style="color:red;border:1px solid red;cursor:pointer;background:#fff;border-radius:3px;font-size:9px">DEL</button></td>
+                <td class="rn-cell" style="font-weight:bold"></td>
+                <td class="name-cell"><span class="entry-span" contenteditable="true" oninput="handleAutoAdd(this); refreshStats()"></span></td>
+                <td class="name-cell"><span class="entry-span" contenteditable="true"></span></td>
+                ${Array(4).fill('<td><span class="entry-span num-input" contenteditable="true" inputmode="numeric" oninput="updateRow(this)"></span></td>').join('')}
+                <td><span class="entry-span num-input" contenteditable="true" inputmode="numeric" oninput="updateRow(this)"></span></td>
+                <td><span class="entry-span num-input" contenteditable="true" inputmode="numeric" oninput="limitValue(this, 50);updateRow(this)"></span></td>
+                ${Array(3).fill('<td><span class="entry-span num-input" contenteditable="true" inputmode="numeric" oninput="updateRow(this)"></span></td>').join('')}
+                <td style="font-weight:900" class="total-cell"></td>
+            `;
+            tableBody.appendChild(tr);
+        }
+        reNumberRows();
     }
 
-    function limit50(el) { if(parseInt(el.innerText) > 50) el.innerText = "50"; }
-
-    function handleAutoRow(el) {
-        if (el.closest('tr') === tableBody.lastElementChild && el.innerText.trim() !== "") {
-            createRow(tableBody.rows.length + 1);
+    function deleteRow(btn) {
+        if(confirm("Remove student record?")) {
+            btn.closest('tr').remove();
+            reNumberRows();
+            refreshStats();
         }
-        refreshStats();
+    }
+
+    function reNumberRows() {
+        const rows = document.getElementById('tableBody').rows;
+        Array.from(rows).forEach((row, index) => { row.cells[1].innerText = index + 1; });
+    }
+
+    function handleAutoAdd(el) {
+        const rows = document.getElementById('tableBody').rows;
+        const row = el.closest('tr');
+        if (row.rowIndex - 1 === rows.length) { addRows(1); }
+    }
+
+    function limitValue(el, max) {
+        let v = parseInt(el.innerText);
+        if (v > max) el.innerText = max;
     }
 
     function updateRow(el) {
@@ -241,49 +219,65 @@
         });
         const totalCell = row.querySelector('.total-cell');
         if (hasData) {
-            totalCell.innerText = sum;
-            totalCell.style.color = sum < PASS_MARK ? '#e74c3c' : '#000';
+            if (sum < PASS_MARK) {
+                totalCell.innerText = "FAIL (" + sum + ")";
+                totalCell.style.color = "red";
+            } else {
+                totalCell.innerText = sum;
+                totalCell.style.color = "black";
+            }
         } else { totalCell.innerText = ""; }
         refreshStats();
     }
 
     function refreshStats() {
-        let app = 0, fail = 0;
-        Array.from(tableBody.rows).forEach(row => {
-            const name = row.querySelector('.name-cell').innerText.trim();
-            const total = parseInt(row.querySelector('.total-cell').innerText);
+        let app = 0, pass = 0, fail = 0;
+        const rows = document.getElementById('tableBody').rows;
+        Array.from(rows).forEach(row => {
+            const name = row.cells[2].innerText.trim();
+            const totalText = row.querySelector('.total-cell').innerText.trim();
             if (name !== "") {
-                app++;
-                if (!isNaN(total) && total < PASS_MARK) fail++;
+                app++; 
+                if (totalText !== "") {
+                    if (totalText.toUpperCase().includes("FAIL")) { fail++; }
+                    else { pass++; }
+                }
             }
         });
-        const pass = app - fail;
         document.getElementById('totalApp').innerText = app;
-        document.getElementById('totalFail').innerText = fail;
         document.getElementById('totalPass').innerText = pass;
+        document.getElementById('totalFail').innerText = fail;
         document.getElementById('totalPerc').innerText = app ? Math.round((pass/app)*100) + "%" : "0%";
     }
 
-    function clearAll() {
-        if(confirm("Erase all data?")) {
-            tableBody.innerHTML = "";
-            for(let i=1; i<=10; i++) createRow(i);
-            refreshStats();
-        }
+    function exportToExcel() {
+        const info = document.getElementById('exportHiddenInfo');
+        const delCol = document.querySelectorAll('.btn-del-cell, .col-del');
+        
+        info.style.display = 'none';
+        delCol.forEach(c => c.style.display = 'none');
+
+        const content = `
+            <html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40">
+            <head><meta charset="utf-8">
+            <style>th { background-color: #f1f5f9 !important; border: 1px solid #000; }</style>
+            </head>
+            <body>${document.getElementById('printArea').outerHTML}</body>
+            </html>
+        `;
+        
+        const blob = new Blob([content], {type: 'application/vnd.ms-excel'});
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'Official_Award_List.xls';
+        a.click();
+        
+        info.style.display = 'flex';
+        delCol.forEach(c => c.style.display = '');
     }
 
-    function exportToExcel(tableID) {
-        let table = document.getElementById(tableID);
-        let clone = table.cloneNode(true);
-        let html = "<h3>Award List - 2026</h3>" + clone.outerHTML + "<p>Designed by Sajjad Ali Humdard: +923073736743</p>";
-        let blob = new Blob([html], {type: 'application/vnd.ms-excel'});
-        let link = document.createElement("a");
-        link.href = URL.createObjectURL(blob);
-        link.download = "Award_List_Sajjad_Ali.xls";
-        link.click();
-    }
-
-    for(let i=1; i<=10; i++) createRow(i);
+    window.onload = () => addRows(10);
 </script>
 </body>
 </html>
