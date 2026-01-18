@@ -6,7 +6,7 @@
     <title>Award List - dir upper</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        :root { --wa-color: #25d366; --primary: #2c3e50; --accent: #3498db; }
+        :root { --wa-color: #25d366; --primary: #2c3e50; --accent: #3498db; --save-btn: #2980b9; }
         * { box-sizing: border-box; -webkit-print-color-adjust: exact; }
         
         body { 
@@ -130,10 +130,10 @@
             </ul>
         </div>
         <div class="guide-item">
-            <strong><i class="fas fa-mouse-pointer"></i> Controls:</strong>
+            <strong><i class="fas fa-save"></i> Data Saving:</strong>
             <ul>
-                <li><b>Print:</b> Saves as A4 PDF.</li>
-                <li><b>WhatsApp:</b> Opens developer chat.</li>
+                <li>Click <b>SAVE DATA</b> to store information in this browser.</li>
+                <li>Data stays even if you close the window.</li>
             </ul>
         </div>
     </div>
@@ -141,7 +141,8 @@
 <div class="action-bar no-print">
     <button class="btn" style="background:#d9534f" onclick="window.print()"><i class="fas fa-file-pdf"></i> PRINT / SAVE PDF</button>
     <button class="btn" style="background:#5cb85c" onclick="exportExcel()"><i class="fas fa-file-excel"></i> SAVE EXCEL</button>
-    <button class="btn" style="background:#777" onclick="location.reload()"><i class="fas fa-sync"></i> RESET ALL</button>
+    <button class="btn" style="background:var(--save-btn)" onclick="saveToLocal()"><i class="fas fa-save"></i> SAVE DATA</button>
+    <button class="btn" style="background:#777" onclick="clearData()"><i class="fas fa-trash"></i> RESET ALL</button>
     
     <div class="dropdown-container">
         <label>Exam Mode</label>
@@ -152,12 +153,36 @@
     </div>
 </div>
 <div class="page-container" id="master-container"></div>
+
 <script>
     const WEIGHT = 0.45;
     let mode = "1st";
     let students = [];
     
-    for(let i=0; i<15; i++) students.push({n:'', f:'', m:Array(9).fill('')});
+    // Initialize data from LocalStorage or default
+    function init() {
+        const saved = localStorage.getItem('awardListData');
+        if (saved) {
+            students = JSON.parse(saved);
+        } else {
+            students = [];
+            for(let i=0; i<15; i++) students.push({n:'', f:'', m:Array(9).fill('')});
+        }
+        render();
+    }
+
+    function saveToLocal() {
+        localStorage.setItem('awardListData', JSON.stringify(students));
+        alert("Data saved successfully to your browser!");
+    }
+
+    function clearData() {
+        if(confirm("Are you sure you want to delete all saved data? This cannot be undone.")) {
+            localStorage.removeItem('awardListData');
+            location.reload();
+        }
+    }
+
     function getMaxMarks(className) {
         let base = 800; 
         if (className === "KG") base = 500;
@@ -243,8 +268,6 @@
         if(sciHead) {
             sciHead.innerText = ["1ST", "2ND", "3RD"].includes(selectedClass) ? "G.K" : "SCI";
         }
-        const totalHead = document.getElementById('total-header');
-        if(totalHead) totalHead.innerText = `TOTAL`;
 
         tbody.innerHTML = students.map((s, i) => {
             const t = calcT(s.m, selectedClass);
@@ -270,6 +293,8 @@
     }
     function updateData(i, field, el) {
         students[i][field] = el.innerText;
+        // Auto-save logic
+        localStorage.setItem('awardListData', JSON.stringify(students));
         if(i === students.length - 1 && el.innerText.trim() !== "") {
             students.push({n:'', f:'', m:Array(9).fill('')});
             refreshRows();
@@ -290,6 +315,8 @@
         }
         updateRowTotal(r);
         updateStats();
+        // Auto-save on mark entry
+        localStorage.setItem('awardListData', JSON.stringify(students));
     }
     function updateRowTotal(r) {
         const selectedClass = document.getElementById('classSelect')?.value || "4TH";
@@ -307,6 +334,7 @@
         if(confirm("Delete student?")) {
             students.splice(index, 1);
             if(students.length === 0) students.push({n:'', f:'', m:Array(9).fill('')});
+            localStorage.setItem('awardListData', JSON.stringify(students));
             refreshRows();
         }
     }
@@ -351,7 +379,7 @@
         let blob = new Blob(['<html><head><meta charset="utf-8"></head><body>' + table + '</body></html>'], {type: 'application/vnd.ms-excel'});
         let a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'AwardList.xls'; a.click();
     }
-    window.onload = render;
+    window.onload = init;
 </script>
 </body>
 </html>
