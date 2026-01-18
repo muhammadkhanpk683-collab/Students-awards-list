@@ -60,7 +60,6 @@
         }
         .page-container { width: 100%; display: flex; flex-direction: column; align-items: center; padding: 10px; }
         
-        /* Fixed jumping by removing 'min-height: auto' which caused flickering */
         .page { 
             background: #fff; margin: 10mm 0; padding: 10mm; 
             width: 210mm; display: flex; flex-direction: column;
@@ -83,18 +82,17 @@
         .info-line { display: flex; justify-content: space-between; font-weight: 900; font-size: 13px; border-bottom: 3px solid #000; padding-bottom: 6px; margin-bottom: 8px; flex-wrap: wrap; gap: 10px; align-items: center; }
         
         table { width: 100%; border-collapse: collapse; table-layout: fixed; border: 3px solid #000; min-width: 700px; }
-        th, td { border: 1.5px solid #000; text-align: center; padding: 2px; height: 32px; font-size: 11px; font-weight: 900; }
+        th, td { border: 1.5px solid #000; text-align: center; padding: 2px; height: 32px; font-size: 11px; font-weight: 900; vertical-align: middle; }
         th { background: #f2f2f2 !important; height: 45px; outline: none; }
         
         .del-col { width: 35px; color: red; cursor: pointer; }
-        .rn-col { width: 35px; }
+        .rn-col { width: 35px; text-align: center; }
         .name-col { width: 140px; text-align: left; padding-left: 6px; white-space: nowrap; overflow: hidden; }
-        .total-col { width: 60px; background: #f0f0f0 !important; font-size: 11px; border-left: 2.5px solid #000; line-height: 1.2;}
+        .total-col { width: 60px; background: #f0f0f0 !important; font-size: 11px; border-left: 2.5px solid #000; line-height: 1.2; text-align: center; }
         
-        .num-input { width: 100%; border: none; outline: none; text-align: center; font-weight: 900; background: transparent; font-size: 12px; display: block; height: 100%; }
+        .num-input { width: 100%; border: none; outline: none; text-align: center; font-weight: 900; background: transparent; font-size: 12px; display: flex; align-items: center; justify-content: center; height: 100%; }
         .fail-text { color: red !important; }
-        .locked-cell { background: #fafafa; color: #bbb; font-weight: normal; font-style: italic; cursor: not-allowed; }
-        /* The footer sticks to the table but doesn't cause screen jumping on update */
+        .locked-cell { background: #fafafa; color: #bbb; font-weight: normal; font-style: italic; cursor: not-allowed; text-align: center; }
         .bottom-container { margin-top: 15px; width: 100%; }
         .stats-row { display: flex; justify-content: space-between; font-weight: 900; font-size: 14px; border-top: 3px solid #000; padding-top: 10px; flex-wrap: wrap; gap: 10px; }
         .sig-area { display: flex; justify-content: space-around; margin-top: 40px; margin-bottom: 15px; flex-wrap: wrap; gap: 30px; }
@@ -102,7 +100,7 @@
         
         .footer-note { font-size: 11px; font-weight: 900; border-top: 1px solid #ddd; padding-top: 8px; display: flex; justify-content: space-between; align-items: center; }
         .wa-link { color: var(--wa-color); text-decoration: none; font-size: 14px; cursor: pointer; }
-        .edit-val { border-bottom: 1px solid #000; min-width: 80px; outline: none; display: inline-block; }
+        .edit-val { border-bottom: 1px solid #000; min-width: 80px; outline: none; display: inline-block; text-align: center; }
     </style>
 </head>
 <body>
@@ -110,7 +108,7 @@
     <h3><i class="fas fa-info-circle"></i> Award List System - Basic Info</h3>
     <div class="guide-grid">
         <div class="guide-item">
-            <strong>Ã°ÂÂÂ Mark Criteria (Final):</strong>
+            <strong><i class="fas fa-chart-bar"></i> Mark Criteria (Final):</strong>
             <ul>
                 <li><b>KG:</b> Total 500 Marks</li>
                 <li><b>1st, 2nd, 3rd:</b> Total 700 Marks</li>
@@ -118,21 +116,21 @@
             </ul>
         </div>
         <div class="guide-item">
-            <strong>Ã¢ÂÂ¡ Semester Mode:</strong>
+            <strong><i class="fas fa-bolt"></i> Semester Mode:</strong>
             <ul>
                 <li><b>1st Semester:</b> Auto-calculates 45% of marks entered.</li>
                 <li><b>Final Mode:</b> Takes full marks (100) for calculation.</li>
             </ul>
         </div>
         <div class="guide-item">
-            <strong>Ã°ÂÂÂ« Passing & Locks:</strong>
+            <strong><i class="fas fa-exclamation-triangle"></i> Passing & Locks:</strong>
             <ul>
                 <li><b>Passing:</b> Automatic Red Fail at < 33%.</li>
                 <li><b>Locks:</b> Non-applicable subjects are locked.</li>
             </ul>
         </div>
         <div class="guide-item">
-            <strong>Ã°ÂÂÂ±Ã¯Â¸Â Controls:</strong>
+            <strong><i class="fas fa-mouse-pointer"></i> Controls:</strong>
             <ul>
                 <li><b>Print:</b> Saves as A4 PDF.</li>
                 <li><b>WhatsApp:</b> Opens developer chat.</li>
@@ -234,7 +232,6 @@
             </div>`;
         refreshRows();
     }
-    // Refresh rows without re-rendering the whole page (Prevents jumping)
     function refreshRows() {
         const tbody = document.getElementById('student-body');
         if (!tbody) return;
@@ -255,25 +252,24 @@
             return `
             <tr>
                 <td class="del-col no-print" onclick="deleteRow(${i})"><i class="fas fa-times"></i></td>
-                <td>${i+1}</td>
+                <td style="text-align: center;">${i+1}</td>
                 <td contenteditable="true" class="name-col" onblur="updateData(${i},'n',this)">${s.n}</td>
                 <td contenteditable="true" class="name-col" onblur="updateData(${i},'f',this)">${s.f}</td>
                 ${s.m.map((m, mi) => {
                     const isLocked = isSubjectLocked(selectedClass, mi);
                     return `
-                    <td class="${isLocked ? 'locked-cell' : ''}">
+                    <td class="${isLocked ? 'locked-cell' : ''}" style="text-align: center;">
                         ${isLocked ? '-' : 
                         `<span contenteditable="true" inputmode="decimal" class="num-input" onblur="setM(${i},${mi},this)">${m}</span>`}
                     </td>`;
                 }).join('')}
-                <td class="total-col ${isFail ? 'fail-text' : ''}" id="t-${i}">${t}${isFail ? '<br>FAIL' : ''}</td>
+                <td class="total-col ${isFail ? 'fail-text' : ''}" id="t-${i}" style="text-align: center;">${t}${isFail ? '<br>FAIL' : ''}</td>
             </tr>`;
         }).join('');
         updateStats();
     }
     function updateData(i, field, el) {
         students[i][field] = el.innerText;
-        // Add new row if typing in last name
         if(i === students.length - 1 && el.innerText.trim() !== "") {
             students.push({n:'', f:'', m:Array(9).fill('')});
             refreshRows();
