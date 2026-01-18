@@ -134,6 +134,13 @@
             <ul>
                 <li>Click <b>SAVE DATA</b> to store information in this browser.</li>
                 <li>Data stays even if you close the window.</li>
+                </ul>
+        </div>
+               <div class="guide-item"> 
+            <strong><i class="fas fa-trash"></i> Delete Information:</strong>
+            <ul>
+                <li><b>Single Student:</b> Click the Red <b>X</b> at the start of any row.</li>
+                <li><b>Entire Class:</b> Click <b>RESET ALL</b> in the top bar to reset the current class.</li>
             </ul>
         </div>
     </div>
@@ -158,10 +165,15 @@
     const WEIGHT = 0.45;
     let mode = "1st";
     let students = [];
-    
-    // Initialize data from LocalStorage or default
+    let currentClass = "KG";
+
+    // Returns a unique key for each class to keep data separate
+    function getStorageKey() {
+        return 'awardListData_' + currentClass;
+    }
+
     function init() {
-        const saved = localStorage.getItem('awardListData');
+        const saved = localStorage.getItem(getStorageKey());
         if (saved) {
             students = JSON.parse(saved);
         } else {
@@ -172,13 +184,13 @@
     }
 
     function saveToLocal() {
-        localStorage.setItem('awardListData', JSON.stringify(students));
-        alert("Data saved successfully to your browser!");
+        localStorage.setItem(getStorageKey(), JSON.stringify(students));
+        alert("Data for Class " + currentClass + " saved successfully!");
     }
 
     function clearData() {
-        if(confirm("Are you sure you want to delete all saved data? This cannot be undone.")) {
-            localStorage.removeItem('awardListData');
+        if(confirm("Are you sure you want to delete all saved data for Class " + currentClass + "? This cannot be undone.")) {
+            localStorage.removeItem(getStorageKey());
             location.reload();
         }
     }
@@ -189,11 +201,18 @@
         else if (["1ST", "2ND", "3RD"].includes(className)) base = 700;
         return mode === "1st" ? Math.round(base * WEIGHT) : base;
     }
+
     function isSubjectLocked(className, mi) {
         if (className === "KG") return [3, 4, 5, 7].includes(mi);
         if (["1ST", "2ND", "3RD"].includes(className)) return mi === 7;
         return false;
     }
+
+    function switchClass(el) {
+        currentClass = el.value;
+        init(); // Loads data for the newly selected class
+    }
+
     function render() {
         const cont = document.getElementById('master-container');
         cont.innerHTML = `
@@ -202,13 +221,13 @@
                 <div class="info-line">
                     <div>SCHOOL: <span class="edit-val" contenteditable="true">G.P.S SALOBAIG</span></div>
                     <div>CLASS: 
-                        <select id="classSelect" onchange="refreshRows()">
-                            <option value="KG">KG</option>
-                            <option value="1ST">1ST</option>
-                            <option value="2ND">2ND</option>
-                            <option value="3RD">3RD</option>
-                            <option value="4TH" selected>4TH</option>
-                            <option value="5TH">5TH</option>
+                        <select id="classSelect" onchange="switchClass(this)">
+                            <option value="KG" ${currentClass==='KG'?'selected':''}>KG</option>
+                            <option value="1ST" ${currentClass==='1ST'?'selected':''}>1ST</option>
+                            <option value="2ND" ${currentClass==='2ND'?'selected':''}>2ND</option>
+                            <option value="3RD" ${currentClass==='3RD'?'selected':''}>3RD</option>
+                            <option value="4TH" ${currentClass==='4TH'?'selected':''}>4TH</option>
+                            <option value="5TH" ${currentClass==='5TH'?'selected':''}>5TH</option>
                         </select>
                     </div>
                     <div>EXAM: <span id="exam-label" style="text-decoration: underline;">${mode === '1st' ? '1ST SEMESTER (45%)' : 'FINAL SEMESTER'}</span></div>
@@ -248,29 +267,28 @@
                         <div class="sig-line" contenteditable="true">Signature HT</div>
                     </div>
                     <div class="footer-note no-print">
-    <div>Design by: Sajjad Ali</div>
-    <a href="https://wa.me/923073736743" target="_blank" class="wa-link">
-        <i class="fab fa-whatsapp"></i> WhatsApp
-    </a>
-</div>
-
+                        <div>Design by: Sajjad Ali</div>
+                        <a href="https://wa.me/923073736743" target="_blank" class="wa-link">
+                            <i class="fab fa-whatsapp"></i> WhatsApp
+                        </a>
+                    </div>
+                </div>
             </div>`;
         refreshRows();
     }
+
     function refreshRows() {
         const tbody = document.getElementById('student-body');
         if (!tbody) return;
-        const selectedClass = document.getElementById('classSelect')?.value || "4TH";
-        const maxMarks = getMaxMarks(selectedClass);
+        const maxMarks = getMaxMarks(currentClass);
         const passLimit = Math.round(maxMarks * 0.33); 
         
         const sciHead = document.getElementById('sci-head');
         if(sciHead) {
-            sciHead.innerText = ["1ST", "2ND", "3RD"].includes(selectedClass) ? "G.K" : "SCI";
+            sciHead.innerText = ["1ST", "2ND", "3RD"].includes(currentClass) ? "G.K" : "SCI";
         }
-
         tbody.innerHTML = students.map((s, i) => {
-            const t = calcT(s.m, selectedClass);
+            const t = calcT(s.m, currentClass);
             const isFail = t < passLimit && t > 0;
             return `
             <tr>
@@ -279,7 +297,7 @@
                 <td contenteditable="true" class="name-col" onblur="updateData(${i},'n',this)">${s.n}</td>
                 <td contenteditable="true" class="name-col" onblur="updateData(${i},'f',this)">${s.f}</td>
                 ${s.m.map((m, mi) => {
-                    const isLocked = isSubjectLocked(selectedClass, mi);
+                    const isLocked = isSubjectLocked(currentClass, mi);
                     return `
                     <td class="${isLocked ? 'locked-cell' : ''}" style="text-align: center;">
                         ${isLocked ? '-' : 
@@ -291,15 +309,16 @@
         }).join('');
         updateStats();
     }
+
     function updateData(i, field, el) {
         students[i][field] = el.innerText;
-        // Auto-save logic
-        localStorage.setItem('awardListData', JSON.stringify(students));
+        localStorage.setItem(getStorageKey(), JSON.stringify(students));
         if(i === students.length - 1 && el.innerText.trim() !== "") {
             students.push({n:'', f:'', m:Array(9).fill('')});
             refreshRows();
         }
     }
+
     function setM(r, mi, el) {
         let v = parseFloat(el.innerText);
         let max = (mi === 4) ? 60 : (mi === 5) ? 40 : 100;
@@ -315,14 +334,13 @@
         }
         updateRowTotal(r);
         updateStats();
-        // Auto-save on mark entry
-        localStorage.setItem('awardListData', JSON.stringify(students));
+        localStorage.setItem(getStorageKey(), JSON.stringify(students));
     }
+
     function updateRowTotal(r) {
-        const selectedClass = document.getElementById('classSelect')?.value || "4TH";
-        const maxMarks = getMaxMarks(selectedClass);
+        const maxMarks = getMaxMarks(currentClass);
         const passLimit = Math.round(maxMarks * 0.33);
-        const t = calcT(students[r].m, selectedClass);
+        const t = calcT(students[r].m, currentClass);
         const totalCell = document.getElementById(`t-${r}`);
         if(totalCell) {
             const isFail = t < passLimit && t > 0;
@@ -330,18 +348,20 @@
             totalCell.className = `total-col ${isFail ? 'fail-text' : ''}`;
         }
     }
+
     function deleteRow(index) {
         if(confirm("Delete student?")) {
             students.splice(index, 1);
             if(students.length === 0) students.push({n:'', f:'', m:Array(9).fill('')});
-            localStorage.setItem('awardListData', JSON.stringify(students));
+            localStorage.setItem(getStorageKey(), JSON.stringify(students));
             refreshRows();
         }
     }
-    function calcT(m, selectedClass) { 
+
+    function calcT(m, className) { 
         let s = 0;
         m.forEach((val, mi) => {
-            if(!isSubjectLocked(selectedClass, mi)) {
+            if(!isSubjectLocked(className, mi)) {
                 s += (parseFloat(val) || 0);
             }
         });
@@ -349,35 +369,32 @@
     }
     
     function updateStats() {
-        const selectedClass = document.getElementById('classSelect')?.value || "4TH";
-        const maxMarks = getMaxMarks(selectedClass);
+        const maxMarks = getMaxMarks(currentClass);
         const passLimit = Math.round(maxMarks * 0.33);
         let app = 0, p = 0, f = 0;
         
         students.forEach(s => {
-            let sc = calcT(s.m, selectedClass);
+            let sc = calcT(s.m, currentClass);
             if (s.n.trim() !== "" || sc > 0) {
                 app++; if (sc >= passLimit) p++; else f++;
             }
         });
-        const appEl = document.getElementById('s-app');
-        const passEl = document.getElementById('s-pass');
-        const failEl = document.getElementById('s-fail');
-        const percEl = document.getElementById('s-perc');
         
-        if(appEl) appEl.innerText = app;
-        if(passEl) passEl.innerText = p;
-        if(failEl) failEl.innerText = f;
-        if(percEl) percEl.innerText = app ? Math.round((p/app)*100) + "%" : "0%";
+        document.getElementById('s-app').innerText = app;
+        document.getElementById('s-pass').innerText = p;
+        document.getElementById('s-fail').innerText = f;
+        document.getElementById('s-perc').innerText = app ? Math.round((p/app)*100) + "%" : "0%";
     }
+
     function updateMode() { 
         mode = document.getElementById('examType').value; 
         render(); 
     }
+
     function exportExcel() {
         let table = document.querySelector(".page").innerHTML;
         let blob = new Blob(['<html><head><meta charset="utf-8"></head><body>' + table + '</body></html>'], {type: 'application/vnd.ms-excel'});
-        let a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'AwardList.xls'; a.click();
+        let a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'AwardList_' + currentClass + '.xls'; a.click();
     }
     window.onload = init;
 </script>
