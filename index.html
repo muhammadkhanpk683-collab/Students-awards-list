@@ -3,281 +3,359 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Award List Manager - Official</title>
+    <title>Award List - dir upper</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        @page { size: A4 portrait; margin: 5mm; }
-        :root { 
-            --primary: #3498db; --excel: #1d6f42; --pdf: #e74c3c; --bg: #f0f2f5; --danger: #e74c3c;
-            --head-color: #f1f5f9; --guide-bg: #e0f2fe;
+        :root { --wa-color: #25d366; --primary: #2c3e50; --accent: #3498db; }
+        * { box-sizing: border-box; -webkit-print-color-adjust: exact; }
+        
+        body { 
+            font-family: 'Arial Narrow', Arial, sans-serif; 
+            background: #f0f0f0; 
+            margin: 0; padding: 0; 
+            display: flex; flex-direction: column; align-items: center;
         }
-        
-        body { font-family: 'Segoe UI', sans-serif; margin: 0; padding: 0; background: var(--bg); color: #333; }
-        
-        /* Action Bar */
+        .user-guide {
+            background: #fff; width: 210mm; margin: 10px auto; padding: 20px;
+            border-left: 5px solid var(--primary); box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            font-family: sans-serif; font-size: 13px; line-height: 1.6;
+        }
+        .user-guide h3 { margin-top: 0; color: var(--primary); border-bottom: 1px solid #eee; padding-bottom: 5px; }
+        .guide-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        .guide-item { background: #f9f9f9; padding: 10px; border-radius: 4px; border: 1px solid #eee; }
         .action-bar { 
             position: sticky; top: 0; background: #fff; padding: 10px; 
-            display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; 
-            z-index: 1000; box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; 
+            z-index: 3000; box-shadow: 0 2px 5px rgba(0,0,0,0.2); width: 100%;
+            align-items: center;
         }
-        .btn { 
-            padding: 10px 16px; border: none; border-radius: 6px; 
-            font-weight: bold; cursor: pointer; color: #fff; 
-            display: flex; align-items: center; gap: 8px; font-size: 13px; text-decoration: none;
+        .btn { padding: 10px 15px; border: none; border-radius: 4px; cursor: pointer; color: #fff; font-weight: bold; font-size: 12px; display: flex; align-items: center; gap: 6px; transition: 0.2s; }
+        .btn:hover { opacity: 0.9; transform: translateY(-1px); }
+        .dropdown-container { display: flex; align-items: center; gap: 8px; background: #f8f9fa; padding: 5px 10px; border-radius: 6px; border: 1px solid #ddd; }
+        .dropdown-container label { font-size: 11px; font-weight: 900; color: #555; text-transform: uppercase; }
+        #examType {
+            padding: 6px 10px;
+            border: 2px solid var(--primary);
+            border-radius: 4px;
+            font-weight: 900;
+            background: #fff;
+            cursor: pointer;
+            outline: none;
+            color: var(--primary);
         }
-
-        /* NEW BASICS USER GUIDE */
-        .user-guide {
-            max-width: 210mm; margin: 15px auto; padding: 20px;
-            background: var(--guide-bg); border: 1.5px solid #7dd3fc;
-            border-radius: 12px; font-size: 0.95rem; line-height: 1.5;
+        #classSelect {
+            padding: 5px 10px;
+            border: 2px solid var(--accent);
+            border-radius: 4px;
+            font-weight: 900;
+            background: #eaf2f8;
+            cursor: pointer;
+            outline: none;
+            animation: pulse-border 2s infinite;
         }
-        .user-guide h2 { margin-top: 0; font-size: 1.1rem; color: #0369a1; border-bottom: 2px solid #7dd3fc; padding-bottom: 5px; margin-bottom: 15px; }
-        .guide-list { list-style: none; padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
-        .guide-list li { display: flex; align-items: flex-start; gap: 10px; }
-        .guide-list i { color: #0284c7; margin-top: 4px; font-size: 1rem; }
-
-        /* Main Wrapper */
-        .wrapper { 
-            background: #fff; width: 95%; max-width: 210mm;
-            margin: 20px auto; padding: 15px; box-sizing: border-box;
-            box-shadow: 0 0 20px rgba(0,0,0,0.1); border-radius: 8px;
+        @keyframes pulse-border {
+            0% { box-shadow: 0 0 0 0px rgba(52, 152, 219, 0.4); }
+            70% { box-shadow: 0 0 0 6px rgba(52, 152, 219, 0); }
+            100% { box-shadow: 0 0 0 0px rgba(52, 152, 219, 0); }
         }
-
-        .header h1 { font-size: 1.2rem; text-align: center; text-decoration: underline; margin-bottom: 15px; font-weight: 800; outline: none; }
-        .meta-line { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 10px; margin-bottom: 15px; font-weight: bold; font-size: 0.85rem; }
-        .edit-line { border-bottom: 1px solid #000; padding: 0 5px; outline: none; min-width: 80px; display: inline-block; font-weight: bold; color: #000; }
-
-        .table-container { width: 100%; overflow-x: auto; border: 1.5px solid #000; }
-        table { width: 100%; border-collapse: collapse; min-width: 850px; }
-        th, td { border: 1px solid #000; text-align: center; padding: 0; font-size: 11px; height: 32px; }
-        th { background-color: var(--head-color) !important; font-weight: bold; outline: none; }
-
-        .entry-span { outline: none; display: flex; align-items: center; justify-content: center; width: 100%; height: 100%; font-weight: bold; color: #000; }
-        .name-cell { text-align: left !important; padding-left: 8px !important; }
-
-        /* Footer */
-        .footer-section { border: 1.5px solid #000; border-top: none; padding: 12px; background: #fff; }
-        .stats-line { display: flex; justify-content: space-between; align-items: center; font-weight: bold; font-size: 0.85rem; margin-bottom: 15px; padding: 10px 0; border-bottom: 1px dashed #000; }
-        .stat-val { font-weight: 900; text-decoration: underline; margin-left: 4px; }
+        .page-container { width: 100%; display: flex; flex-direction: column; align-items: center; padding: 10px; }
         
-        .signature-area { display: flex; justify-content: space-around; margin-top: 45px; margin-bottom: 15px; gap: 20px; }
-        .sig-box { border-top: 1.5px solid #000; width: 220px; text-align: center; font-weight: bold; font-size: 0.85rem; padding-top: 5px; outline: none; }
-        
-        /* Personal info row - HIDDEN IN EXPORT/PDF */
-        .personal-info { display: flex; justify-content: space-between; align-items: center; font-size: 0.8rem; color: #444; border-top: 1px solid #eee; padding-top: 8px; }
-        .wa-link { color: #25D366; text-decoration: none; font-weight: 600; display: flex; align-items: center; gap: 5px; }
-
-        /* PRINT CONTROLS */
+        /* Fixed jumping by removing 'min-height: auto' which caused flickering */
+        .page { 
+            background: #fff; margin: 10mm 0; padding: 10mm; 
+            width: 210mm; display: flex; flex-direction: column;
+            border: 1px solid #000; position: relative; box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        @media screen and (max-width: 210mm) {
+            .page, .user-guide { width: 98%; margin: 5px auto; padding: 5mm; font-size: 10px; }
+            .guide-grid { grid-template-columns: 1fr; }
+            .table-wrapper { width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+        }
         @media print {
-            .action-bar, .user-guide, .col-del, .btn-del-cell, .personal-info { display: none !important; }
-            .wrapper { width: 100%; margin: 0; box-shadow: none; padding: 0; }
-            table { min-width: 100%; }
+            @page { size: A4 portrait; margin: 0; }
+            .no-print, .user-guide { display: none !important; }
+            body { background: #fff; }
+            .page { margin: 0; border: none; width: 210mm; box-shadow: none; min-height: 297mm; }
+            #classSelect { border: none; background: transparent; animation: none; -webkit-appearance: none; }
+            .page-container { padding: 0; }
         }
-
-        @media (max-width: 600px) {
-            .guide-list { grid-template-columns: 1fr; }
-            .stats-line { flex-direction: column; align-items: flex-start; gap: 8px; }
-        }
+        .header-title { text-align: center; font-weight: 900; font-size: 24px; text-decoration: underline; margin-bottom: 8px; }
+        .info-line { display: flex; justify-content: space-between; font-weight: 900; font-size: 13px; border-bottom: 3px solid #000; padding-bottom: 6px; margin-bottom: 8px; flex-wrap: wrap; gap: 10px; align-items: center; }
+        
+        table { width: 100%; border-collapse: collapse; table-layout: fixed; border: 3px solid #000; min-width: 700px; }
+        th, td { border: 1.5px solid #000; text-align: center; padding: 2px; height: 32px; font-size: 11px; font-weight: 900; }
+        th { background: #f2f2f2 !important; height: 45px; outline: none; }
+        
+        .del-col { width: 35px; color: red; cursor: pointer; }
+        .rn-col { width: 35px; }
+        .name-col { width: 140px; text-align: left; padding-left: 6px; white-space: nowrap; overflow: hidden; }
+        .total-col { width: 60px; background: #f0f0f0 !important; font-size: 11px; border-left: 2.5px solid #000; line-height: 1.2;}
+        
+        .num-input { width: 100%; border: none; outline: none; text-align: center; font-weight: 900; background: transparent; font-size: 12px; display: block; height: 100%; }
+        .fail-text { color: red !important; }
+        .locked-cell { background: #fafafa; color: #bbb; font-weight: normal; font-style: italic; cursor: not-allowed; }
+        /* The footer sticks to the table but doesn't cause screen jumping on update */
+        .bottom-container { margin-top: 15px; width: 100%; }
+        .stats-row { display: flex; justify-content: space-between; font-weight: 900; font-size: 14px; border-top: 3px solid #000; padding-top: 10px; flex-wrap: wrap; gap: 10px; }
+        .sig-area { display: flex; justify-content: space-around; margin-top: 40px; margin-bottom: 15px; flex-wrap: wrap; gap: 30px; }
+        .sig-line { border-top: 2.5px solid #000; width: 220px; text-align: center; font-weight: 900; font-size: 13px; padding-top: 6px; }
+        
+        .footer-note { font-size: 11px; font-weight: 900; border-top: 1px solid #ddd; padding-top: 8px; display: flex; justify-content: space-between; align-items: center; }
+        .wa-link { color: var(--wa-color); text-decoration: none; font-size: 14px; cursor: pointer; }
+        .edit-val { border-bottom: 1px solid #000; min-width: 80px; outline: none; display: inline-block; }
     </style>
 </head>
 <body>
-
-<div class="action-bar">
-    <button class="btn" style="background:var(--pdf)" onclick="window.print()"><i class="fas fa-print"></i> PDF/Print</button>
-    <button class="btn" style="background:var(--excel)" onclick="exportToExcel()"><i class="fas fa-file-excel"></i> Excel Download</button>
-    <button class="btn" style="background:var(--primary)" onclick="location.reload()"><i class="fas fa-sync"></i> Reset</button>
-</div>
-
-<div class="user-guide">
-    <h2><i class="fas fa-star"></i> Essential Basics</h2>
-    <ul class="guide-list">
-        <li><i class="fas fa-mouse-pointer"></i> <strong>Click to Edit:</strong> Every heading, school name, and data cell is directly editable. Just click and type.</li>
-        <li><i class="fas fa-magic"></i> <strong>Auto-Add Rows:</strong> Once you type a name in the bottom row, a new blank row will appear automatically.</li>
-        <li><i class="fas fa-calculator"></i> <strong>Live Calculations:</strong> Totals and stats update instantly. Failures are automatically marked in <span style="color:red">RED</span>.</li>
-        <li><i class="fas fa-eye-slash"></i> <strong>Privacy Guard:</strong> All technical info and this guide are removed from your official downloads.</li>
-    </ul>
-</div>
-
-<div class="wrapper" id="printArea">
-    <div class="header">
-        <h1 contenteditable="true">WINTER SEMESTER EXAM 2026 - AWARD LIST</h1>
-    </div>
-
-    <div class="meta-line">
-        <div class="meta-item">SCHOOL: <span class="edit-line" contenteditable="true">G.P.S Salobaig</span></div>
-        <div class="meta-item">CLASS: <span class="edit-line" contenteditable="true">4th</span></div>
-        <div class="meta-item">EXAM: <span class="edit-line" contenteditable="true">Winter Exam</span></div>
-        <div class="meta-item">DISTRICT: <span class="edit-line" contenteditable="true">Dir Upper</span></div>
-    </div>
-
-    <div class="table-container">
-        <table>
-            <thead>
-                <tr>
-                    <th rowspan="2" class="col-del">DEL</th>
-                    <th rowspan="2" style="width:35px" contenteditable="true">R.N</th>
-                    <th rowspan="2" contenteditable="true">STUDENT NAME</th>
-                    <th rowspan="2" contenteditable="true">FATHER NAME</th>
-                    <th rowspan="2" contenteditable="true">ENG</th>
-                    <th rowspan="2" contenteditable="true">URD</th>
-                    <th rowspan="2" contenteditable="true">MAT</th>
-                    <th rowspan="2" contenteditable="true">SCI</th>
-                    <th colspan="2" contenteditable="true">ISL + NQ</th>
-                    <th rowspan="2" contenteditable="true">PSH</th>
-                    <th rowspan="2" contenteditable="true">S.S</th>
-                    <th rowspan="2" contenteditable="true">D.G</th>
-                    <th rowspan="2" contenteditable="true">TOTAL</th>
-                </tr>
-                <tr>
-                    <th contenteditable="true">ISL</th>
-                    <th contenteditable="true">NQ</th>
-                </tr>
-            </thead>
-            <tbody id="tableBody"></tbody>
-        </table>
-    </div>
-
-    <div class="footer-section">
-        <div class="stats-line">
-            <div class="stat-item">STUDENTS APPEARED:<span class="stat-val" id="totalApp">0</span></div>
-            <div class="stat-item">PASSED:<span class="stat-val" id="totalPass">0</span></div>
-            <div class="stat-item">FAILED:<span class="stat-val" id="totalFail">0</span></div>
-            <div class="stat-item">PASS %:<span class="stat-val" id="totalPerc">0%</span></div>
+<div class="user-guide no-print">
+    <h3><i class="fas fa-info-circle"></i> Award List System - Basic Info</h3>
+    <div class="guide-grid">
+        <div class="guide-item">
+            <strong>Ã°ÂÂÂ Mark Criteria (Final):</strong>
+            <ul>
+                <li><b>KG:</b> Total 500 Marks</li>
+                <li><b>1st, 2nd, 3rd:</b> Total 700 Marks</li>
+                <li><b>4th, 5th:</b> Total 800 Marks</li>
+            </ul>
         </div>
-        
-        <div class="signature-area">
-            <div class="sig-box" contenteditable="true">Class Teacher Signature</div>
-            <div class="sig-box" contenteditable="true">Head Teacher Signature</div>
+        <div class="guide-item">
+            <strong>Ã¢ÂÂ¡ Semester Mode:</strong>
+            <ul>
+                <li><b>1st Semester:</b> Auto-calculates 45% of marks entered.</li>
+                <li><b>Final Mode:</b> Takes full marks (100) for calculation.</li>
+            </ul>
         </div>
-        
-        <div class="personal-info" id="exportHiddenInfo">
-            <div>Sajjad Ali Humdard</div>
-            <div>
-                <a href="https://wa.me/923073736743" class="wa-link">
-                    <i class="fab fa-whatsapp"></i> WhatsApp Support
-                </a>
-            </div>
+        <div class="guide-item">
+            <strong>Ã°ÂÂÂ« Passing & Locks:</strong>
+            <ul>
+                <li><b>Passing:</b> Automatic Red Fail at < 33%.</li>
+                <li><b>Locks:</b> Non-applicable subjects are locked.</li>
+            </ul>
+        </div>
+        <div class="guide-item">
+            <strong>Ã°ÂÂÂ±Ã¯Â¸Â Controls:</strong>
+            <ul>
+                <li><b>Print:</b> Saves as A4 PDF.</li>
+                <li><b>WhatsApp:</b> Opens developer chat.</li>
+            </ul>
         </div>
     </div>
 </div>
-
+<div class="action-bar no-print">
+    <button class="btn" style="background:#d9534f" onclick="window.print()"><i class="fas fa-file-pdf"></i> PRINT / SAVE PDF</button>
+    <button class="btn" style="background:#5cb85c" onclick="exportExcel()"><i class="fas fa-file-excel"></i> SAVE EXCEL</button>
+    <button class="btn" style="background:#777" onclick="location.reload()"><i class="fas fa-sync"></i> RESET ALL</button>
+    
+    <div class="dropdown-container">
+        <label>Exam Mode</label>
+        <select id="examType" onchange="updateMode()">
+            <option value="1st">1st Semester (45%)</option>
+            <option value="Final">Final Semester (100%)</option>
+        </select>
+    </div>
+</div>
+<div class="page-container" id="master-container"></div>
 <script>
-    const PASS_MARK = 264;
+    const WEIGHT = 0.45;
+    let mode = "1st";
+    let students = [];
+    
+    for(let i=0; i<15; i++) students.push({n:'', f:'', m:Array(9).fill('')});
+    function getMaxMarks(className) {
+        let base = 800; 
+        if (className === "KG") base = 500;
+        else if (["1ST", "2ND", "3RD"].includes(className)) base = 700;
+        return mode === "1st" ? Math.round(base * WEIGHT) : base;
+    }
+    function isSubjectLocked(className, mi) {
+        if (className === "KG") return [3, 4, 5, 7].includes(mi);
+        if (["1ST", "2ND", "3RD"].includes(className)) return mi === 7;
+        return false;
+    }
+    function render() {
+        const cont = document.getElementById('master-container');
+        cont.innerHTML = `
+            <div class="page">
+                <div class="header-title" contenteditable="true">STUDENT AWARD LIST - 2026</div>
+                <div class="info-line">
+                    <div>SCHOOL: <span class="edit-val" contenteditable="true">G.P.S SALOBAIG</span></div>
+                    <div>CLASS: 
+                        <select id="classSelect" onchange="refreshRows()">
+                            <option value="KG">KG</option>
+                            <option value="1ST">1ST</option>
+                            <option value="2ND">2ND</option>
+                            <option value="3RD">3RD</option>
+                            <option value="4TH" selected>4TH</option>
+                            <option value="5TH">5TH</option>
+                        </select>
+                    </div>
+                    <div>EXAM: <span id="exam-label" style="text-decoration: underline;">${mode === '1st' ? '1ST SEMESTER (45%)' : 'FINAL SEMESTER'}</span></div>
+                </div>
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th class="del-col no-print"><i class="fas fa-trash"></i></th>
+                                <th class="rn-col">R.N</th>
+                                <th class="name-col" contenteditable="true">STUDENT NAME</th>
+                                <th class="name-col" contenteditable="true">FATHER NAME</th>
+                                <th contenteditable="true">ENG</th>
+                                <th contenteditable="true">URD</th>
+                                <th contenteditable="true">MAT</th>
+                                <th id="sci-head" contenteditable="true">SCI</th>
+                                <th contenteditable="true">ISL (60)</th>
+                                <th contenteditable="true">NQ (40)</th>
+                                <th contenteditable="true">PSH</th>
+                                <th contenteditable="true">S.S</th>
+                                <th contenteditable="true">D.G</th>
+                                <th class="total-col" id="total-header">TOTAL</th>
+                            </tr>
+                        </thead>
+                        <tbody id="student-body"></tbody>
+                    </table>
+                </div>
+                <div class="bottom-container">
+                    <div class="stats-row">
+                        <div>Students APPEARED: <span id="s-app">0</span></div>
+                        <div>PASS: <span id="s-pass">0</span></div>
+                        <div>FAIL: <span id="s-fail">0</span></div>
+                        <div>PASSING %: <span id="s-perc">0%</span></div>
+                    </div>
+                    <div class="sig-area">
+                        <div class="sig-line" contenteditable="true">Signature Class Teacher</div>
+                        <div class="sig-line" contenteditable="true">Signature HT</div>
+                    </div>
+                    <div class="footer-note no-print">
+    <div>Design by: Sajjad Ali</div>
+    <a href="https://wa.me/923073736743" target="_blank" class="wa-link">
+        <i class="fab fa-whatsapp"></i> WhatsApp
+    </a>
+</div>
 
-    function addRows(count) {
-        const tableBody = document.getElementById('tableBody');
-        for(let i=0; i<count; i++) {
-            const tr = document.createElement('tr');
-            tr.innerHTML = `
-                <td class="btn-del-cell"><button onclick="deleteRow(this)" style="color:red;border:1px solid red;cursor:pointer;background:#fff;border-radius:3px;font-size:9px">DEL</button></td>
-                <td class="rn-cell" style="font-weight:bold"></td>
-                <td class="name-cell"><span class="entry-span" contenteditable="true" oninput="handleAutoAdd(this); refreshStats()"></span></td>
-                <td class="name-cell"><span class="entry-span" contenteditable="true"></span></td>
-                ${Array(4).fill('<td><span class="entry-span num-input" contenteditable="true" inputmode="numeric" oninput="updateRow(this)"></span></td>').join('')}
-                <td><span class="entry-span num-input" contenteditable="true" inputmode="numeric" oninput="updateRow(this)"></span></td>
-                <td><span class="entry-span num-input" contenteditable="true" inputmode="numeric" oninput="limitValue(this, 50);updateRow(this)"></span></td>
-                ${Array(3).fill('<td><span class="entry-span num-input" contenteditable="true" inputmode="numeric" oninput="updateRow(this)"></span></td>').join('')}
-                <td style="font-weight:900" class="total-cell"></td>
-            `;
-            tableBody.appendChild(tr);
+            </div>`;
+        refreshRows();
+    }
+    // Refresh rows without re-rendering the whole page (Prevents jumping)
+    function refreshRows() {
+        const tbody = document.getElementById('student-body');
+        if (!tbody) return;
+        const selectedClass = document.getElementById('classSelect')?.value || "4TH";
+        const maxMarks = getMaxMarks(selectedClass);
+        const passLimit = Math.round(maxMarks * 0.33); 
+        
+        const sciHead = document.getElementById('sci-head');
+        if(sciHead) {
+            sciHead.innerText = ["1ST", "2ND", "3RD"].includes(selectedClass) ? "G.K" : "SCI";
         }
-        reNumberRows();
-    }
+        const totalHead = document.getElementById('total-header');
+        if(totalHead) totalHead.innerText = `TOTAL`;
 
-    function deleteRow(btn) {
-        if(confirm("Remove student record?")) {
-            btn.closest('tr').remove();
-            reNumberRows();
-            refreshStats();
+        tbody.innerHTML = students.map((s, i) => {
+            const t = calcT(s.m, selectedClass);
+            const isFail = t < passLimit && t > 0;
+            return `
+            <tr>
+                <td class="del-col no-print" onclick="deleteRow(${i})"><i class="fas fa-times"></i></td>
+                <td>${i+1}</td>
+                <td contenteditable="true" class="name-col" onblur="updateData(${i},'n',this)">${s.n}</td>
+                <td contenteditable="true" class="name-col" onblur="updateData(${i},'f',this)">${s.f}</td>
+                ${s.m.map((m, mi) => {
+                    const isLocked = isSubjectLocked(selectedClass, mi);
+                    return `
+                    <td class="${isLocked ? 'locked-cell' : ''}">
+                        ${isLocked ? '-' : 
+                        `<span contenteditable="true" inputmode="decimal" class="num-input" onblur="setM(${i},${mi},this)">${m}</span>`}
+                    </td>`;
+                }).join('')}
+                <td class="total-col ${isFail ? 'fail-text' : ''}" id="t-${i}">${t}${isFail ? '<br>FAIL' : ''}</td>
+            </tr>`;
+        }).join('');
+        updateStats();
+    }
+    function updateData(i, field, el) {
+        students[i][field] = el.innerText;
+        // Add new row if typing in last name
+        if(i === students.length - 1 && el.innerText.trim() !== "") {
+            students.push({n:'', f:'', m:Array(9).fill('')});
+            refreshRows();
         }
     }
-
-    function reNumberRows() {
-        const rows = document.getElementById('tableBody').rows;
-        Array.from(rows).forEach((row, index) => { row.cells[1].innerText = index + 1; });
+    function setM(r, mi, el) {
+        let v = parseFloat(el.innerText);
+        let max = (mi === 4) ? 60 : (mi === 5) ? 40 : 100;
+        if (isNaN(v)) { 
+            students[r].m[mi] = ''; 
+        } else if (v > max) { 
+            alert("Max Marks: " + max); 
+            el.innerText = ''; students[r].m[mi] = ''; 
+        } else {
+            let res = (mode === "1st") ? (v * WEIGHT).toFixed(1) : v;
+            el.innerText = res; 
+            students[r].m[mi] = res;
+        }
+        updateRowTotal(r);
+        updateStats();
     }
-
-    function handleAutoAdd(el) {
-        const rows = document.getElementById('tableBody').rows;
-        const row = el.closest('tr');
-        if (row.rowIndex - 1 === rows.length) { addRows(1); }
+    function updateRowTotal(r) {
+        const selectedClass = document.getElementById('classSelect')?.value || "4TH";
+        const maxMarks = getMaxMarks(selectedClass);
+        const passLimit = Math.round(maxMarks * 0.33);
+        const t = calcT(students[r].m, selectedClass);
+        const totalCell = document.getElementById(`t-${r}`);
+        if(totalCell) {
+            const isFail = t < passLimit && t > 0;
+            totalCell.innerHTML = `${t}${isFail ? '<br>FAIL' : ''}`;
+            totalCell.className = `total-col ${isFail ? 'fail-text' : ''}`;
+        }
     }
-
-    function limitValue(el, max) {
-        let v = parseInt(el.innerText);
-        if (v > max) el.innerText = max;
+    function deleteRow(index) {
+        if(confirm("Delete student?")) {
+            students.splice(index, 1);
+            if(students.length === 0) students.push({n:'', f:'', m:Array(9).fill('')});
+            refreshRows();
+        }
     }
-
-    function updateRow(el) {
-        const row = el.closest('tr');
-        const cells = row.querySelectorAll('.num-input');
-        let sum = 0, hasData = false;
-        cells.forEach(c => {
-            let v = parseInt(c.innerText);
-            if(!isNaN(v)) { sum += v; hasData = true; }
-        });
-        const totalCell = row.querySelector('.total-cell');
-        if (hasData) {
-            if (sum < PASS_MARK) {
-                totalCell.innerText = "FAIL (" + sum + ")";
-                totalCell.style.color = "red";
-            } else {
-                totalCell.innerText = sum;
-                totalCell.style.color = "black";
-            }
-        } else { totalCell.innerText = ""; }
-        refreshStats();
-    }
-
-    function refreshStats() {
-        let app = 0, pass = 0, fail = 0;
-        const rows = document.getElementById('tableBody').rows;
-        Array.from(rows).forEach(row => {
-            const name = row.cells[2].innerText.trim();
-            const totalText = row.querySelector('.total-cell').innerText.trim();
-            if (name !== "") {
-                app++; 
-                if (totalText !== "") {
-                    if (totalText.toUpperCase().includes("FAIL")) { fail++; }
-                    else { pass++; }
-                }
+    function calcT(m, selectedClass) { 
+        let s = 0;
+        m.forEach((val, mi) => {
+            if(!isSubjectLocked(selectedClass, mi)) {
+                s += (parseFloat(val) || 0);
             }
         });
-        document.getElementById('totalApp').innerText = app;
-        document.getElementById('totalPass').innerText = pass;
-        document.getElementById('totalFail').innerText = fail;
-        document.getElementById('totalPerc').innerText = app ? Math.round((pass/app)*100) + "%" : "0%";
+        return s > 0 ? Math.round(s) : 0; 
     }
-
-    function exportToExcel() {
-        const info = document.getElementById('exportHiddenInfo');
-        const delCol = document.querySelectorAll('.btn-del-cell, .col-del');
+    
+    function updateStats() {
+        const selectedClass = document.getElementById('classSelect')?.value || "4TH";
+        const maxMarks = getMaxMarks(selectedClass);
+        const passLimit = Math.round(maxMarks * 0.33);
+        let app = 0, p = 0, f = 0;
         
-        info.style.display = 'none';
-        delCol.forEach(c => c.style.display = 'none');
-
-        const content = `
-            <html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40">
-            <head><meta charset="utf-8">
-            <style>th { background-color: #f1f5f9 !important; border: 1px solid #000; }</style>
-            </head>
-            <body>${document.getElementById('printArea').outerHTML}</body>
-            </html>
-        `;
+        students.forEach(s => {
+            let sc = calcT(s.m, selectedClass);
+            if (s.n.trim() !== "" || sc > 0) {
+                app++; if (sc >= passLimit) p++; else f++;
+            }
+        });
+        const appEl = document.getElementById('s-app');
+        const passEl = document.getElementById('s-pass');
+        const failEl = document.getElementById('s-fail');
+        const percEl = document.getElementById('s-perc');
         
-        const blob = new Blob([content], {type: 'application/vnd.ms-excel'});
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = 'Official_Award_List.xls';
-        a.click();
-        
-        info.style.display = 'flex';
-        delCol.forEach(c => c.style.display = '');
+        if(appEl) appEl.innerText = app;
+        if(passEl) passEl.innerText = p;
+        if(failEl) failEl.innerText = f;
+        if(percEl) percEl.innerText = app ? Math.round((p/app)*100) + "%" : "0%";
     }
-
-    window.onload = () => addRows(10);
+    function updateMode() { 
+        mode = document.getElementById('examType').value; 
+        render(); 
+    }
+    function exportExcel() {
+        let table = document.querySelector(".page").innerHTML;
+        let blob = new Blob(['<html><head><meta charset="utf-8"></head><body>' + table + '</body></html>'], {type: 'application/vnd.ms-excel'});
+        let a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'AwardList.xls'; a.click();
+    }
+    window.onload = render;
 </script>
 </body>
 </html>
