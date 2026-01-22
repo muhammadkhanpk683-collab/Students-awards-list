@@ -56,7 +56,7 @@
             position: relative;
         }
         .guide-text::before {
-            content: "Ã¢ÂÂ¢";
+            content: "";
             position: absolute;
             left: 0;
             color: var(--zong-green);
@@ -125,43 +125,61 @@
 
 <div class="executive-guide no-print">
     <div class="guide-banner">
-        <span><i class="fas fa-microchip"></i> SYSTEM ARCHITECTURE & DATA INFO</span>
+        <span><i class="fas fa-info-circle"></i> SYSTEM HANDBOOK & BASIC INFORMATION</span>
     </div>
     <div class="guide-body">
         
         <div class="guide-section">
-            <div class="guide-title"><i class="fas fa-calculator"></i> CALCULATION ENGINE</div>
+            <div class="guide-title"><i class="fas fa-play-circle"></i> GETTING STARTED</div>
             <div class="guide-grid">
                 <div>
-                    <p class="guide-text"><span class="highlight">1st Sem:</span> Auto-weights input by <span class="highlight">45%</span>. (e.g., 100 &rarr; 45)</p>
-                    <p class="guide-text"><span class="highlight">Final:</span> Full <span class="highlight">100%</span> raw score mapping.</p>
+                    <p class="guide-text"><span class="highlight">Step 1:</span> Select the <strong>Class</strong> and <strong>Exam Mode</strong> (1st Sem or Annual) from the dropdown menus.</p>
+                    <p class="guide-text"><span class="highlight">Step 2:</span> Enter Student Name. Father's Name is optional but recommended for records.</p>
                 </div>
                 <div>
-                    <p class="guide-text"><span class="highlight">Pass/Fail:</span> Triggered at <span class="highlight">33%</span> of weighted total.</p>
-                    <p class="guide-text"><span class="highlight">Rounding:</span> Scores are rounded to the nearest whole integer for reports.</p>
+                    <p class="guide-text"><span class="highlight">Step 3:</span> Enter marks. For 1st Sem, the system <strong>auto-calculates 45%</strong>. For Annual, enter 100% raw marks.</p>
+                    <p class="guide-text"><span class="highlight">Step 4:</span> Click <strong>Next</strong> to move to the next roll number. Data is saved automatically.</p>
                 </div>
             </div>
         </div>
 
         <div class="guide-section">
-            <div class="guide-title"><i class="fas fa-list-ol"></i> CLASS-WISE MAX MARKS (100% SCALE)</div>
-            <table class="guide-table">
-                <tr><th>Class Group</th><th>Max Marks</th><th>Subjects Included</th></tr>
-                <tr><td>KG</td><td>500</td><td>ENG, URD, MAT, G.K, ISL</td></tr>
-                <tr><td>1st - 3rd</td><td>700</td><td>ENG, URD, MAT, G.K, ISL, NQ, PSH, S.S</td></tr>
-                <tr><td>4th - 5th</td><td>800</td><td>ENG, URD, MAT, SCI, ISL, NQ, PSH, S.S</td></tr>
-                <tr><td>6th - 8th</td><td>900</td><td>ENG, URD, MAT, SCI, ISL, ARB, HIS, GEO, COMP</td></tr>
-            </table>
+            <div class="guide-title"><i class="fas fa-graduation-cap"></i> PASSING CRITERIA</div>
+            <div style="background: #fff9fb; border: 1px solid #fce7f3; padding: 12px; border-radius: 8px;">
+                <p class="guide-text" style="margin-bottom: 5px;"><span class="highlight">The 33% Rule:</span> A student is marked <strong>PASS</strong> if their total aggregate meets or exceeds 33% of the total marks.</p>
+                <p class="guide-text"><span class="highlight">Automated Fail:</span> Any student with a total below the threshold is highlighted in <strong>RED</strong> on the final award list.</p>
+            </div>
         </div>
 
         <div class="guide-section">
-            <div class="guide-title"><i class="fas fa-hdd"></i> STORAGE & REPORTING</div>
-            <p class="guide-text"><span class="highlight">Local Storage:</span> Data is cached per <span class="highlight">Class + Mode</span> combination. Switch modes safely without data loss.</p>
-            <p class="guide-text"><span class="highlight">Print Logic:</span> Multi-page A4 rendering (<span class="highlight">30 students/page</span>). System automatically excludes empty records from the final print list.</p>
+            <div class="guide-title"><i class="fas fa-print"></i> EXPORT & STORAGE</div>
+            <div class="guide-grid">
+                <div>
+                    <p class="guide-text"><span class="highlight">Save PDF:</span> Uses A4 formatting. It is designed to fit <strong>30 students</strong> perfectly on one page.</p>
+                </div>
+                <div>
+                    <p class="guide-text"><span class="highlight">Privacy:</span> Data is stored <strong>locally on your device</strong>. Clearing browser cache will delete the data.</p>
+                </div>
+            </div>
         </div>
 
+        <div class="guide-section">
+            <div class="guide-title"><i class="fas fa-book"></i> SUBJECT KEY</div>
+            <div style="font-size: 10px; color: #64748b; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 5px; padding: 10px; background: #f8fafc; border-radius: 8px;">
+                <span><strong>ENG:</strong> English</span>
+                <span><strong>URD:</strong> Urdu</span>
+                <span><strong>MAT:</strong> Mathematics</span>
+                <span><strong>SCI:</strong> Science</span>
+                <span><strong>ISL:</strong> Islamiat</span>
+                <span><strong>NQ:</strong> Nazra Quran</span>
+                <span><strong>PSH:</strong> Pashto</span>
+                <span><strong>S.S:</strong> Social Studies</span>
+                <span><strong>ARB:</strong> Arabic</span>
+            </div>
+        </div>
     </div>
 </div>
+
 
 <div class="app-view no-print">
     <div class="app-header">
