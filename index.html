@@ -3,400 +3,386 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Award List - dir upper</title>
+    <title>Award List Portal - G.P.S SALOBAIG</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        :root { --wa-color: #25d366; --primary: #2c3e50; --accent: #3498db; --save-btn: #2980b9; }
+        :root { --zong-pink: #df1b77; --zong-green: #8cc63f; --bg: #f0f2f5; --save-blue: #007bff; --danger: #dc3545; --dark-slate: #2c3e50; }
         * { box-sizing: border-box; -webkit-print-color-adjust: exact; }
-        
-        body { 
-            font-family: 'Arial Narrow', Arial, sans-serif; 
-            background: #f0f0f0; 
-            margin: 0; padding: 0; 
-            display: flex; flex-direction: column; align-items: center;
+        body { font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background: var(--bg); margin: 0; }
+
+        /* Comprehensive Executive Guide Styling */
+        .executive-guide { 
+            background: #ffffff; 
+            margin: 20px auto; 
+            max-width: 500px;
+            border-radius: 12px; 
+            border: 1px solid #d1d5db;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+            overflow: hidden;
         }
-        .user-guide {
-            background: #fff; width: 210mm; margin: 10px auto; padding: 20px;
-            border-left: 5px solid var(--primary); box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            font-family: sans-serif; font-size: 13px; line-height: 1.6;
-        }
-        .user-guide h3 { margin-top: 0; color: var(--primary); border-bottom: 1px solid #eee; padding-bottom: 5px; }
-        .guide-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
-        .guide-item { background: #f9f9f9; padding: 10px; border-radius: 4px; border: 1px solid #eee; }
-        .action-bar { 
-            position: sticky; top: 0; background: #fff; padding: 10px; 
-            display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; 
-            z-index: 3000; box-shadow: 0 2px 5px rgba(0,0,0,0.2); width: 100%;
+        .guide-banner {
+            background: var(--dark-slate);
+            color: #ffffff;
+            padding: 12px 20px;
+            font-size: 13px;
+            letter-spacing: 1px;
+            font-weight: 700;
+            display: flex;
+            justify-content: space-between;
             align-items: center;
         }
-        .btn { padding: 10px 15px; border: none; border-radius: 4px; cursor: pointer; color: #fff; font-weight: bold; font-size: 12px; display: flex; align-items: center; gap: 6px; transition: 0.2s; }
-        .btn:hover { opacity: 0.9; transform: translateY(-1px); }
-        .dropdown-container { display: flex; align-items: center; gap: 8px; background: #f8f9fa; padding: 5px 10px; border-radius: 6px; border: 1px solid #ddd; }
-        .dropdown-container label { font-size: 11px; font-weight: 900; color: #555; text-transform: uppercase; }
-        #examType {
-            padding: 6px 10px;
-            border: 2px solid var(--primary);
-            border-radius: 4px;
-            font-weight: 900;
-            background: #fff;
-            cursor: pointer;
-            outline: none;
-            color: var(--primary);
+        .guide-body { padding: 20px; }
+        .guide-section { margin-bottom: 20px; }
+        .guide-section:last-child { margin-bottom: 0; }
+        .guide-title { 
+            color: var(--zong-pink); 
+            font-size: 11px; 
+            font-weight: 800; 
+            text-transform: uppercase; 
+            margin-bottom: 8px; 
+            display: flex; 
+            align-items: center; 
+            gap: 6px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 4px;
         }
-        #classSelect {
-            padding: 5px 10px;
-            border: 2px solid var(--accent);
-            border-radius: 4px;
-            font-weight: 900;
-            background: #eaf2f8;
-            cursor: pointer;
-            outline: none;
-            animation: pulse-border 2s infinite;
+        .guide-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        .guide-text { 
+            color: #4b5563; 
+            font-size: 11px; 
+            line-height: 1.5; 
+            margin: 0 0 5px 0; 
+            padding-left: 15px;
+            position: relative;
         }
-        @keyframes pulse-border {
-            0% { box-shadow: 0 0 0 0px rgba(52, 152, 219, 0.4); }
-            70% { box-shadow: 0 0 0 6px rgba(52, 152, 219, 0); }
-            100% { box-shadow: 0 0 0 0px rgba(52, 152, 219, 0); }
+        .guide-text::before {
+            content: "Ã¢ÂÂ¢";
+            position: absolute;
+            left: 0;
+            color: var(--zong-green);
+            font-weight: bold;
         }
-        .page-container { width: 100%; display: flex; flex-direction: column; align-items: center; padding: 10px; }
+        .highlight { color: #000; font-weight: 700; }
+
+        /* Table inside guide for Class marks info */
+        .guide-table { width: 100%; border-collapse: collapse; margin-top: 5px; font-size: 10px; }
+        .guide-table th { text-align: left; color: #999; font-weight: 600; padding: 2px 0; }
+        .guide-table td { padding: 2px 0; color: #444; }
+
+        .app-view { max-width: 500px; margin: 0 auto; background: #fff; min-height: 100vh; padding-bottom: 20px; border: 1px solid #ddd; display: flex; flex-direction: column; }
+        .app-header { background: linear-gradient(135deg, var(--zong-pink), #9d1252); color: white; padding: 15px; text-align: center; }
+        .edit-head { width: 100%; background: rgba(255,255,255,0.15); border: 1px dashed white; color: white; text-align: center; border-radius: 5px; margin-bottom: 5px; padding: 5px; font-weight: bold; outline: none; }
         
-        .page { 
-            background: #fff; margin: 10mm 0; padding: 10mm; 
-            width: 210mm; display: flex; flex-direction: column;
-            border: 1px solid #000; position: relative; box-shadow: 0 0 10px rgba(0,0,0,0.1);
-        }
-        @media screen and (max-width: 210mm) {
-            .page, .user-guide { width: 98%; margin: 5px auto; padding: 5mm; font-size: 10px; }
-            .guide-grid { grid-template-columns: 1fr; }
-            .table-wrapper { width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; }
-        }
+        .top-nav { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; padding: 10px; background: #fff; border-bottom: 2px solid #eee; position: sticky; top: 0; z-index: 100; }
+        .btn { padding: 10px; border: none; border-radius: 8px; color: white; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 5px; font-size: 12px; }
+
+        .form-section { padding: 15px; flex-grow: 1; }
+        .student-card { background: white; padding: 15px; border-radius: 15px; border: 1.5px solid #ddd; box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+        .input-box { width: 100%; padding: 12px; margin-bottom: 10px; border: 1.2px solid #ccc; border-radius: 10px; font-size: 16px; font-weight: 600; outline: none; }
+
+        .subjects-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 15px; }
+        .sub-card { background: #fdfdfd; border: 1px solid #eee; padding: 8px; border-radius: 10px; text-align: center; }
+        .sub-card label { display: block; font-size: 10px; font-weight: 900; margin-bottom: 2px; color: var(--zong-green); }
+        .sub-card.locked label { color: var(--danger) !important; }
+        .sub-card.locked { opacity: 0.6; background: #f2f2f2; }
+        .sub-card input { width: 100%; border: none; background: transparent; text-align: center; font-size: 18px; font-weight: bold; outline: none; }
+        
+        .total-box { margin-top: 15px; padding: 10px; background: #f8f8f8; border-radius: 10px; text-align: center; font-weight: 900; border: 2px solid var(--zong-green); }
+        .live-status { font-size: 12px; padding: 2px 8px; border-radius: 5px; color: white; margin-left: 10px; vertical-align: middle; }
+
+        .nav-controls { display: flex; justify-content: space-between; align-items: center; margin-top: 25px; padding: 0 10px; }
+        .nav-btn { background: #444; color: white; border: none; padding: 12px 18px; border-radius: 30px; font-weight: 900; cursor: pointer; font-size: 13px; display: flex; align-items: center; gap: 8px; transition: 0.2s; }
+        .nav-btn:active { transform: scale(0.95); background: var(--zong-pink); }
+
+        .app-footer { text-align: center; padding: 15px 10px; margin-top: 20px; border-top: 1px solid #eee; color: #666; font-size: 13px; }
+        .app-footer strong { color: var(--zong-pink); }
+        .app-footer .wa-link { color: #25D366; text-decoration: none; font-size: 16px; font-weight: bold; display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 8px; }
+
+        .sig-settings { margin-top: 15px; padding: 10px; background: #f9f9f9; border-radius: 10px; border: 1px solid #ddd; }
+        .sig-settings label { font-size: 11px; font-weight: bold; color: #555; }
+        .sig-input { width: 100%; padding: 5px; margin-bottom: 5px; border: 1px solid #ccc; border-radius: 4px; font-size: 12px; }
+
+        /* Print Settings */
+        #dynamic-print-container { display: none; }
+
         @media print {
-            @page { size: A4 portrait; margin: 0; }
-            .no-print, .user-guide { display: none !important; }
-            body { background: #fff; }
-            .page { margin: 0; border: none; width: 210mm; box-shadow: none; min-height: 297mm; }
-            #classSelect { border: none; background: transparent; animation: none; -webkit-appearance: none; }
-            .page-container { padding: 0; }
+            .no-print { display: none !important; }
+            #dynamic-print-container { display: block !important; width: 100%; }
+            .print-page { page-break-after: always; padding: 5mm; background: white; }
+            .a4-head { text-align: center; text-decoration: underline; font-size: 16pt; font-weight: 900; margin-bottom: 10px; }
+            .a4-info-bar { display: flex; justify-content: space-between; align-items: center; font-weight: 900; font-size: 9.5pt; margin-bottom: 8px; padding: 5px 2px; border-bottom: 2px solid black; }
+            table { width: 100%; border-collapse: collapse; border: 2px solid black; }
+            th, td { border: 1px solid black; text-align: center; padding: 4px; font-size: 8.5pt; font-weight: 900; height: 26px; }
+            .total-cell { background-color: #f2f2f2 !important; font-weight: bold; border-right: 2px solid black; }
+            .fail-text { color: var(--danger) !important; font-size: 6.5pt; display: block; line-height: 0.8; font-weight: bold; }
+            .print-stats-bottom { font-weight: 900; font-size: 10pt; margin-top: 15px; display: flex; justify-content: space-around; border-top: 1px dashed #000; padding-top: 10px; }
+            .signature-row { display: flex; justify-content: space-around; margin-top: 40px; gap: 20px; }
+            .sig-box { border-top: 1.5px solid black; width: 150px; text-align: center; font-weight: bold; font-size: 9pt; padding-top: 5px; }
         }
-        .header-title { text-align: center; font-weight: 900; font-size: 24px; text-decoration: underline; margin-bottom: 8px; }
-        .info-line { display: flex; justify-content: space-between; font-weight: 900; font-size: 13px; border-bottom: 3px solid #000; padding-bottom: 6px; margin-bottom: 8px; flex-wrap: wrap; gap: 10px; align-items: center; }
-        
-        table { width: 100%; border-collapse: collapse; table-layout: fixed; border: 3px solid #000; min-width: 700px; }
-        th, td { border: 1.5px solid #000; text-align: center; padding: 2px; height: 32px; font-size: 11px; font-weight: 900; vertical-align: middle; }
-        th { background: #f2f2f2 !important; height: 45px; outline: none; }
-        
-        .del-col { width: 35px; color: red; cursor: pointer; }
-        .rn-col { width: 35px; text-align: center; }
-        .name-col { width: 140px; text-align: left; padding-left: 6px; white-space: nowrap; overflow: hidden; }
-        .total-col { width: 60px; background: #f0f0f0 !important; font-size: 11px; border-left: 2.5px solid #000; line-height: 1.2; text-align: center; }
-        
-        .num-input { width: 100%; border: none; outline: none; text-align: center; font-weight: 900; background: transparent; font-size: 12px; display: flex; align-items: center; justify-content: center; height: 100%; }
-        .fail-text { color: red !important; }
-        .locked-cell { background: #fafafa; color: #bbb; font-weight: normal; font-style: italic; cursor: not-allowed; text-align: center; }
-        .bottom-container { margin-top: 15px; width: 100%; }
-        .stats-row { display: flex; justify-content: space-between; font-weight: 900; font-size: 14px; border-top: 3px solid #000; padding-top: 10px; flex-wrap: wrap; gap: 10px; }
-        .sig-area { display: flex; justify-content: space-around; margin-top: 40px; margin-bottom: 15px; flex-wrap: wrap; gap: 30px; }
-        .sig-line { border-top: 2.5px solid #000; width: 220px; text-align: center; font-weight: 900; font-size: 13px; padding-top: 6px; }
-        
-        .footer-note { font-size: 11px; font-weight: 900; border-top: 1px solid #ddd; padding-top: 8px; display: flex; justify-content: space-between; align-items: center; }
-        .wa-link { color: var(--wa-color); text-decoration: none; font-size: 14px; cursor: pointer; }
-        .edit-val { border-bottom: 1px solid #000; min-width: 80px; outline: none; display: inline-block; text-align: center; }
     </style>
 </head>
 <body>
-<div class="user-guide no-print">
-    <h3><i class="fas fa-info-circle"></i> Award List System - Basic Info</h3>
-    <div class="guide-grid">
-        <div class="guide-item">
-            <strong><i class="fas fa-chart-bar"></i> Mark Criteria (Final):</strong>
-            <ul>
-                <li><b>KG:</b> Total 500 Marks</li>
-                <li><b>1st, 2nd, 3rd:</b> Total 700 Marks</li>
-                <li><b>4th, 5th:</b> Total 800 Marks</li>
-            </ul>
+
+<div class="executive-guide no-print">
+    <div class="guide-banner">
+        <span><i class="fas fa-microchip"></i> SYSTEM ARCHITECTURE & DATA INFO</span>
+    </div>
+    <div class="guide-body">
+        
+        <div class="guide-section">
+            <div class="guide-title"><i class="fas fa-calculator"></i> CALCULATION ENGINE</div>
+            <div class="guide-grid">
+                <div>
+                    <p class="guide-text"><span class="highlight">1st Sem:</span> Auto-weights input by <span class="highlight">45%</span>. (e.g., 100 &rarr; 45)</p>
+                    <p class="guide-text"><span class="highlight">Final:</span> Full <span class="highlight">100%</span> raw score mapping.</p>
+                </div>
+                <div>
+                    <p class="guide-text"><span class="highlight">Pass/Fail:</span> Triggered at <span class="highlight">33%</span> of weighted total.</p>
+                    <p class="guide-text"><span class="highlight">Rounding:</span> Scores are rounded to the nearest whole integer for reports.</p>
+                </div>
+            </div>
         </div>
-        <div class="guide-item">
-            <strong><i class="fas fa-bolt"></i> Semester Mode:</strong>
-            <ul>
-                <li><b>1st Semester:</b> Auto-calculates 45% of marks entered.</li>
-                <li><b>Final Mode:</b> Takes full marks (100) for calculation.</li>
-            </ul>
+
+        <div class="guide-section">
+            <div class="guide-title"><i class="fas fa-list-ol"></i> CLASS-WISE MAX MARKS (100% SCALE)</div>
+            <table class="guide-table">
+                <tr><th>Class Group</th><th>Max Marks</th><th>Subjects Included</th></tr>
+                <tr><td>KG</td><td>500</td><td>ENG, URD, MAT, G.K, ISL</td></tr>
+                <tr><td>1st - 3rd</td><td>700</td><td>ENG, URD, MAT, G.K, ISL, NQ, PSH, S.S</td></tr>
+                <tr><td>4th - 5th</td><td>800</td><td>ENG, URD, MAT, SCI, ISL, NQ, PSH, S.S</td></tr>
+                <tr><td>6th - 8th</td><td>900</td><td>ENG, URD, MAT, SCI, ISL, ARB, HIS, GEO, COMP</td></tr>
+            </table>
         </div>
-        <div class="guide-item">
-            <strong><i class="fas fa-exclamation-triangle"></i> Passing & Locks:</strong>
-            <ul>
-                <li><b>Passing:</b> Automatic Red Fail at < 33%.</li>
-                <li><b>Locks:</b> Non-applicable subjects are locked.</li>
-            </ul>
+
+        <div class="guide-section">
+            <div class="guide-title"><i class="fas fa-hdd"></i> STORAGE & REPORTING</div>
+            <p class="guide-text"><span class="highlight">Local Storage:</span> Data is cached per <span class="highlight">Class + Mode</span> combination. Switch modes safely without data loss.</p>
+            <p class="guide-text"><span class="highlight">Print Logic:</span> Multi-page A4 rendering (<span class="highlight">30 students/page</span>). System automatically excludes empty records from the final print list.</p>
         </div>
-        <div class="guide-item">
-            <strong><i class="fas fa-save"></i> Data Saving:</strong>
-            <ul>
-                <li>Click <b>SAVE DATA</b> to store information in this browser.</li>
-                <li>Data stays even if you close the window.</li>
-                </ul>
-        </div>
-               <div class="guide-item"> 
-            <strong><i class="fas fa-trash"></i> Delete Information:</strong>
-            <ul>
-                <li><b>Single Student:</b> Click the Red <b>X</b> at the start of any row.</li>
-                <li><b>Entire Class:</b> Click <b>RESET ALL</b> in the top bar to reset the current class.</li>
-            </ul>
-        </div>
+
     </div>
 </div>
-<div class="action-bar no-print">
-    <button class="btn" style="background:#d9534f" onclick="window.print()"><i class="fas fa-file-pdf"></i> PRINT / SAVE PDF</button>
-    <button class="btn" style="background:#5cb85c" onclick="exportExcel()"><i class="fas fa-file-excel"></i> SAVE EXCEL</button>
-    <button class="btn" style="background:var(--save-btn)" onclick="saveToLocal()"><i class="fas fa-save"></i> SAVE DATA</button>
-    <button class="btn" style="background:#777" onclick="clearData()"><i class="fas fa-trash"></i> RESET ALL</button>
+
+<div class="app-view no-print">
+    <div class="app-header">
+        <input type="text" id="edit-school" class="edit-head" value="G.P.S SALOBAIG" oninput="renderTable()">
+        <input type="text" id="edit-title" class="edit-head" value="STUDENT AWARD LIST - 2026" oninput="renderTable()">
+    </div>
+
+    <div class="top-nav">
+        <button class="btn" style="background:var(--save-blue)" onclick="saveToDisk()"><i class="fas fa-save"></i> SAVED</button>
+        <button class="btn" style="background:var(--zong-green)" onclick="window.print()"><i class="fas fa-print"></i> Save PDF</button>
+        <button class="btn" style="background:orange; color:black" onclick="clearCurrentRow()"><i class="fas fa-user-slash"></i> CLEAR</button>
+        <button class="btn" style="background:var(--danger)" onclick="deleteWholeClass()"><i class="fas fa-trash"></i> RESET</button>
+    </div>
+
+    <div class="form-section">
+        <div style="display:flex; flex-direction:column; gap:8px; margin-bottom:15px;">
+            <div style="display:flex; gap:8px;">
+                <select id="classSel" onchange="changeClass(this.value)" style="flex:1.5; padding:10px; border-radius:8px; font-weight:bold;">
+                    <option value="KG">Class: KG</option>
+                    <option value="1ST">Class: 1ST</option>
+                    <option value="2ND">Class: 2ND</option>
+                    <option value="3RD">Class: 3RD</option>
+                    <option value="4TH">Class: 4TH</option>
+                    <option value="5TH">Class: 5TH</option>
+                    <option value="6TH">Class: 6TH</option>
+                    <option value="7TH">Class: 7TH</option>
+                    <option value="8TH">Class: 8TH</option>
+                </select>
+                <input type="text" id="sectionInp" placeholder="Sec" value="A" oninput="renderTable()" style="width:50px; padding:10px; border-radius:8px; font-weight:bold; text-align:center; border:1px solid #ccc;">
+                <select id="modeSel" onchange="changeMode(this.value)" style="flex:2; padding:10px; border-radius:8px; font-weight:bold;">
+                    <option value="1st">1st Sem (45%)</option>
+                    <option value="Final">Annual exam</option>
+                </select>
+            </div>
+            
+            <div id="percCont" style="display: none; margin-top: 5px;">
+                <select id="percSel" onchange="changePerc(this.value)" style="width:100%; padding:10px; border-radius:8px; font-weight:bold; border: 2px solid var(--zong-green);">
+                </select>
+            </div>
+            
+            <div class="sig-settings">
+                <label>Edit Signature Titles:</label>
+                <div style="display:grid; grid-template-columns: 1fr 1fr; gap:5px; margin-top:5px;">
+                    <input type="text" id="sig1-edit" class="sig-input" value="Class Teacher" oninput="renderTable()">
+                    <input type="text" id="sig2-edit" class="sig-input" value="Head Master" oninput="renderTable()">
+                </div>
+                <div id="sig3-cont" style="display:none">
+                    <input type="text" id="sig3-edit" class="sig-input" value="Controller of Exam" oninput="renderTable()">
+                </div>
+            </div>
+        </div>
+
+        <div class="student-card">
+            <div id="roll-info" style="font-weight:900; color:var(--zong-pink); margin-bottom:10px;">Roll No: 1</div>
+            <input type="text" id="sName" class="input-box" placeholder="Student Name" oninput="updateData('n', this.value)">
+            <input type="text" id="fName" class="input-box" placeholder="Father Name" oninput="updateData('f', this.value)">
+            <div class="subjects-grid" id="subGrid"></div>
+            <div id="total-container" class="total-box">
+                TOTAL: <span id="live-total" style="color:var(--zong-pink); font-size:22px;">0</span>
+                <span id="live-status" class="live-status"></span>
+            </div>
+        </div>
+
+        <div class="nav-controls">
+            <button class="nav-btn" onclick="nav(-1)"><i class="fas fa-chevron-left"></i> PREVIOUS</button>
+            <span id="page-indicator" style="font-weight:900; font-size:18px; color:#444;">1 / 100</span>
+            <button class="nav-btn" onclick="nav(1)">NEXT <i class="fas fa-chevron-right"></i></button>
+        </div>
+    </div>
     
-    <div class="dropdown-container">
-        <label>Exam Mode</label>
-        <select id="examType" onchange="updateMode()">
-            <option value="1st">1st Semester (45%)</option>
-            <option value="Final">Final Semester (100%)</option>
-        </select>
-    </div>
+    <footer class="app-footer no-print">
+        Developed by: <strong>Sajjad Ali Humdard</strong>
+        <a href="https://wa.me/923073736743" class="wa-link">
+            <i class="fab fa-whatsapp"></i> Help support
+        </a>
+    </footer>
 </div>
-<div class="page-container" id="master-container"></div>
+
+<div id="dynamic-print-container"></div>
 
 <script>
-    const WEIGHT = 0.45;
-    let mode = "1st";
-    let students = [];
-    let currentClass = "KG";
+    let WEIGHT = 0.45, PASS_THRESHOLD = 0.33, currentMode = "1st", currentClass = "KG", activeIdx = 0, maxReachedIdx = 0, students = [];
 
-    // Returns a unique key for each class to keep data separate
-    function getStorageKey() {
-        return 'awardListData_' + currentClass;
+    function getStoreKey() { return 'AwardData_ModeSplit_' + currentClass + '_' + currentMode; }
+    
+    function getPassCriteria() {
+        let maxMarks = (currentClass === "KG") ? 500 : (["1ST", "2ND", "3RD"].includes(currentClass)) ? 700 : (["4TH", "5TH"].includes(currentClass)) ? 800 : 900;
+        return maxMarks * WEIGHT * PASS_THRESHOLD;
     }
 
-    function init() {
-        const saved = localStorage.getItem(getStorageKey());
-        if (saved) {
-            students = JSON.parse(saved);
-        } else {
-            students = [];
-            for(let i=0; i<15; i++) students.push({n:'', f:'', m:Array(9).fill('')});
-        }
-        render();
+    function updatePercOptions() {
+        const container = document.getElementById('percCont');
+        if(currentMode === "Final") {
+            container.style.display = "block";
+            document.getElementById('percSel').innerHTML = '';
+            for(let i=10; i<=45; i++) {
+                let opt = document.createElement('option');
+                opt.value = i/100; opt.innerHTML = `Set Passing Marks: ${i}%`;
+                if(i === 33) opt.selected = true;
+                document.getElementById('percSel').appendChild(opt);
+            }
+        } else { container.style.display = "none"; PASS_THRESHOLD = 0.33; }
     }
 
-    function saveToLocal() {
-        localStorage.setItem(getStorageKey(), JSON.stringify(students));
-        alert("Data for Class " + currentClass + " saved successfully!");
+    function getSubjects() {
+        if (["1ST", "2ND", "3RD"].includes(currentClass)) return ["ENG","URD","MAT","G.K","ISL","NQ","PSH","S.S","D.G"];
+        if (["6TH", "7TH", "8TH"].includes(currentClass)) return ["ENG","URD","MAT","SCI","ISL","ARB","HIS","GEO","COMP"];
+        return ["ENG","URD","MAT","SCI","ISL","NQ","PSH","S.S","D.G"];
     }
 
-    function clearData() {
-        if(confirm("Are you sure you want to delete all saved data for Class " + currentClass + "? This cannot be undone.")) {
-            localStorage.removeItem(getStorageKey());
-            location.reload();
-        }
-    }
-
-    function getMaxMarks(className) {
-        let base = 800; 
-        if (className === "KG") base = 500;
-        else if (["1ST", "2ND", "3RD"].includes(className)) base = 700;
-        return mode === "1st" ? Math.round(base * WEIGHT) : base;
-    }
-
-    function isSubjectLocked(className, mi) {
-        if (className === "KG") return [3, 4, 5, 7].includes(mi);
-        if (["1ST", "2ND", "3RD"].includes(className)) return mi === 7;
+    function isLocked(mi) {
+        if (currentClass === "KG") return [3, 4, 5, 7].includes(mi);
+        if (["1ST", "2ND", "3RD"].includes(currentClass)) return [7].includes(mi);
         return false;
     }
 
-    function switchClass(el) {
-        currentClass = el.value;
-        init(); // Loads data for the newly selected class
+    function init() {
+        let saved = JSON.parse(localStorage.getItem(getStoreKey()));
+        students = saved || Array.from({length: 100}, () => ({n:'', f:'', m:Array(9).fill('')}));
+        let lastFilled = 0; students.forEach((s, i) => { if(s.n || s.f) lastFilled = i; });
+        maxReachedIdx = lastFilled;
+        const subjects = getSubjects();
+        document.getElementById('subGrid').innerHTML = subjects.map((s, i) => `
+            <div class="sub-card ${isLocked(i)?'locked':''}">
+                <label>${s}</label>
+                <input type="text" inputmode="decimal" id="m-${i}" onblur="manualMarkEntry(${i}, this.value)" ${isLocked(i)?'disabled':''}>
+            </div>`).join('');
+        document.getElementById('sig3-cont').style.display = ["6TH", "7TH", "8TH"].includes(currentClass) ? 'block' : 'none';
+        load(activeIdx);
     }
 
-    function render() {
-        const cont = document.getElementById('master-container');
-        cont.innerHTML = `
-            <div class="page">
-                <div class="header-title" contenteditable="true">STUDENT AWARD LIST - 2026</div>
-                <div class="info-line">
-                    <div>SCHOOL: <span class="edit-val" contenteditable="true">G.P.S SALOBAIG</span></div>
-                    <div>CLASS: 
-                        <select id="classSelect" onchange="switchClass(this)">
-                            <option value="KG" ${currentClass==='KG'?'selected':''}>KG</option>
-                            <option value="1ST" ${currentClass==='1ST'?'selected':''}>1ST</option>
-                            <option value="2ND" ${currentClass==='2ND'?'selected':''}>2ND</option>
-                            <option value="3RD" ${currentClass==='3RD'?'selected':''}>3RD</option>
-                            <option value="4TH" ${currentClass==='4TH'?'selected':''}>4TH</option>
-                            <option value="5TH" ${currentClass==='5TH'?'selected':''}>5TH</option>
-                        </select>
-                    </div>
-                    <div>EXAM: <span id="exam-label" style="text-decoration: underline;">${mode === '1st' ? '1ST SEMESTER (45%)' : 'FINAL SEMESTER'}</span></div>
-                </div>
-                <div class="table-wrapper">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th class="del-col no-print"><i class="fas fa-trash"></i></th>
-                                <th class="rn-col">R.N</th>
-                                <th class="name-col" contenteditable="true">STUDENT NAME</th>
-                                <th class="name-col" contenteditable="true">FATHER NAME</th>
-                                <th contenteditable="true">ENG</th>
-                                <th contenteditable="true">URD</th>
-                                <th contenteditable="true">MAT</th>
-                                <th id="sci-head" contenteditable="true">SCI</th>
-                                <th contenteditable="true">ISL (60)</th>
-                                <th contenteditable="true">NQ (40)</th>
-                                <th contenteditable="true">PSH</th>
-                                <th contenteditable="true">S.S</th>
-                                <th contenteditable="true">D.G</th>
-                                <th class="total-col" id="total-header">TOTAL</th>
-                            </tr>
-                        </thead>
-                        <tbody id="student-body"></tbody>
-                    </table>
-                </div>
-                <div class="bottom-container">
-                    <div class="stats-row">
-                        <div>Students APPEARED: <span id="s-app">0</span></div>
-                        <div>PASS: <span id="s-pass">0</span></div>
-                        <div>FAIL: <span id="s-fail">0</span></div>
-                        <div>PASSING %: <span id="s-perc">0%</span></div>
-                    </div>
-                    <div class="sig-area">
-                        <div class="sig-line" contenteditable="true">Signature Class Teacher</div>
-                        <div class="sig-line" contenteditable="true">Signature HT</div>
-                    </div>
-                    <div class="footer-note no-print">
-                        <div>Design by: Sajjad Ali</div>
-                        <a href="https://wa.me/923073736743" target="_blank" class="wa-link">
-                            <i class="fab fa-whatsapp"></i> WhatsApp
-                        </a>
-                    </div>
-                </div>
-            </div>`;
-        refreshRows();
+    function load(idx) {
+        activeIdx = idx; if(idx > maxReachedIdx) maxReachedIdx = idx;
+        const s = students[activeIdx];
+        document.getElementById('roll-info').innerText = "Roll No: " + (idx + 1);
+        document.getElementById('page-indicator').innerText = (idx + 1) + " / 100";
+        document.getElementById('sName').value = s.n || "";
+        document.getElementById('fName').value = s.f || "";
+        getSubjects().forEach((_, i) => { let input = document.getElementById(`m-${i}`); if(input) input.value = s.m[i] || ""; });
+        updateLiveTotal(); renderTable();
     }
 
-    function refreshRows() {
-        const tbody = document.getElementById('student-body');
-        if (!tbody) return;
-        const maxMarks = getMaxMarks(currentClass);
-        const passLimit = Math.round(maxMarks * 0.33); 
+    function manualMarkEntry(mi, val) {
+        if(val === "") { students[activeIdx].m[mi] = ''; } 
+        else { let finalVal = (currentMode === "1st") ? (parseFloat(val) * 0.45).toFixed(1) : val; students[activeIdx].m[mi] = finalVal; document.getElementById(`m-${mi}`).value = finalVal; }
+        updateLiveTotal(); renderTable(); saveToDisk();
+    }
+
+    function updateLiveTotal() {
+        let total = students[activeIdx].m.reduce((a, b) => a + (parseFloat(b) || 0), 0);
+        document.getElementById('live-total').innerText = Math.round(total);
+        const st = document.getElementById('live-status');
+        if (total >= getPassCriteria() && (students[activeIdx].n !== "" || total > 0)) { st.innerText = "PASS"; st.style.backgroundColor = "var(--zong-green)"; }
+        else { st.innerText = "FAIL"; st.style.backgroundColor = "var(--danger)"; }
+    }
+
+    function renderTable() {
+        let app = 0, pass = 0, fail = 0; 
+        const passLimit = getPassCriteria();
+        const studentsPerPage = 30;
+        const filledStudents = students.slice(0, maxReachedIdx + 1);
         
-        const sciHead = document.getElementById('sci-head');
-        if(sciHead) {
-            sciHead.innerText = ["1ST", "2ND", "3RD"].includes(currentClass) ? "G.K" : "SCI";
-        }
-        tbody.innerHTML = students.map((s, i) => {
-            const t = calcT(s.m, currentClass);
-            const isFail = t < passLimit && t > 0;
-            return `
-            <tr>
-                <td class="del-col no-print" onclick="deleteRow(${i})"><i class="fas fa-times"></i></td>
-                <td style="text-align: center;">${i+1}</td>
-                <td contenteditable="true" class="name-col" onblur="updateData(${i},'n',this)">${s.n}</td>
-                <td contenteditable="true" class="name-col" onblur="updateData(${i},'f',this)">${s.f}</td>
-                ${s.m.map((m, mi) => {
-                    const isLocked = isSubjectLocked(currentClass, mi);
-                    return `
-                    <td class="${isLocked ? 'locked-cell' : ''}" style="text-align: center;">
-                        ${isLocked ? '-' : 
-                        `<span contenteditable="true" inputmode="decimal" class="num-input" onblur="setM(${i},${mi},this)">${m}</span>`}
-                    </td>`;
-                }).join('')}
-                <td class="total-col ${isFail ? 'fail-text' : ''}" id="t-${i}" style="text-align: center;">${t}${isFail ? '<br>FAIL' : ''}</td>
-            </tr>`;
-        }).join('');
-        updateStats();
-    }
-
-    function updateData(i, field, el) {
-        students[i][field] = el.innerText;
-        localStorage.setItem(getStorageKey(), JSON.stringify(students));
-        if(i === students.length - 1 && el.innerText.trim() !== "") {
-            students.push({n:'', f:'', m:Array(9).fill('')});
-            refreshRows();
-        }
-    }
-
-    function setM(r, mi, el) {
-        let v = parseFloat(el.innerText);
-        let max = (mi === 4) ? 60 : (mi === 5) ? 40 : 100;
-        if (isNaN(v)) { 
-            students[r].m[mi] = ''; 
-        } else if (v > max) { 
-            alert("Max Marks: " + max); 
-            el.innerText = ''; students[r].m[mi] = ''; 
-        } else {
-            let res = (mode === "1st") ? (v * WEIGHT).toFixed(1) : v;
-            el.innerText = res; 
-            students[r].m[mi] = res;
-        }
-        updateRowTotal(r);
-        updateStats();
-        localStorage.setItem(getStorageKey(), JSON.stringify(students));
-    }
-
-    function updateRowTotal(r) {
-        const maxMarks = getMaxMarks(currentClass);
-        const passLimit = Math.round(maxMarks * 0.33);
-        const t = calcT(students[r].m, currentClass);
-        const totalCell = document.getElementById(`t-${r}`);
-        if(totalCell) {
-            const isFail = t < passLimit && t > 0;
-            totalCell.innerHTML = `${t}${isFail ? '<br>FAIL' : ''}`;
-            totalCell.className = `total-col ${isFail ? 'fail-text' : ''}`;
-        }
-    }
-
-    function deleteRow(index) {
-        if(confirm("Delete student?")) {
-            students.splice(index, 1);
-            if(students.length === 0) students.push({n:'', f:'', m:Array(9).fill('')});
-            localStorage.setItem(getStorageKey(), JSON.stringify(students));
-            refreshRows();
-        }
-    }
-
-    function calcT(m, className) { 
-        let s = 0;
-        m.forEach((val, mi) => {
-            if(!isSubjectLocked(className, mi)) {
-                s += (parseFloat(val) || 0);
+        filledStudents.forEach(s => {
+            let total = s.m.reduce((a, b) => a + (parseFloat(b) || 0), 0);
+            if(s.n.trim() !== "" || total > 0) {
+                app++; if(total >= passLimit) pass++; else fail++;
             }
         });
-        return s > 0 ? Math.round(s) : 0; 
-    }
-    
-    function updateStats() {
-        const maxMarks = getMaxMarks(currentClass);
-        const passLimit = Math.round(maxMarks * 0.33);
-        let app = 0, p = 0, f = 0;
-        
-        students.forEach(s => {
-            let sc = calcT(s.m, currentClass);
-            if (s.n.trim() !== "" || sc > 0) {
-                app++; if (sc >= passLimit) p++; else f++;
-            }
-        });
-        
-        document.getElementById('s-app').innerText = app;
-        document.getElementById('s-pass').innerText = p;
-        document.getElementById('s-fail').innerText = f;
-        document.getElementById('s-perc').innerText = app ? Math.round((p/app)*100) + "%" : "0%";
+
+        const container = document.getElementById('dynamic-print-container');
+        container.innerHTML = ''; 
+
+        for (let i = 0; i < filledStudents.length; i += studentsPerPage) {
+            const chunk = filledStudents.slice(i, i + studentsPerPage);
+            const pageDiv = document.createElement('div');
+            pageDiv.className = 'print-page';
+            
+            const subjects = getSubjects();
+            const tableRows = chunk.map((s, index) => {
+                let total = s.m.reduce((a, b) => a + (parseFloat(b) || 0), 0);
+                let isFail = (s.n.trim() !== "" || total > 0) && (total < passLimit);
+                return `<tr><td>${i+index+1}</td><td style="text-align:left">${s.n}</td><td style="text-align:left">${s.f}</td>${s.m.map((m, mi) => `<td>${isLocked(mi)?'-':(m||'')}</td>`).join('')}<td class="total-cell">${Math.round(total) || 0}${isFail ? '<span class="fail-text">FAIL</span>' : ''}</td></tr>`;
+            }).join('');
+
+            pageDiv.innerHTML = `
+                <div class="a4-head">${document.getElementById('edit-title').value}</div>
+                <div class="a4-info-bar">
+                    <span>SCHOOL: ${document.getElementById('edit-school').value}</span>
+                    <span>CLASS: ${currentClass}</span>
+                    <span>SECTION: ${document.getElementById('sectionInp').value.toUpperCase()}</span>
+                    <span>EXAM: ${currentMode === '1st' ? '1ST' : 'FINAL'} SEM (${Math.round(WEIGHT*100)}%)</span>
+                </div>
+                <table>
+                    <thead><tr><th>RN</th><th style="width:150px">STUDENT NAME</th><th style="width:150px">FATHER NAME</th>${subjects.map(s => `<th>${s}</th>`).join('')}<th class="total-cell">TOTAL</th></tr></thead>
+                    <tbody>${tableRows}</tbody>
+                </table>
+                ${(i + studentsPerPage >= filledStudents.length) ? `
+                    <div class="print-stats-bottom">
+                        <span>Students Appeared: ${app}</span><span>Pass: ${pass}</span><span>Fail: ${fail}</span><span>Pass %: ${app > 0 ? Math.round((pass/app)*100) : 0}%</span>
+                    </div>
+                    <div class="signature-row">
+                        <div class="sig-box">${document.getElementById('sig1-edit').value}</div>
+                        <div class="sig-box">${document.getElementById('sig2-edit').value}</div>
+                        ${["6TH", "7TH", "8TH"].includes(currentClass) ? `<div class="sig-box">${document.getElementById('sig3-edit').value}</div>` : ''}
+                    </div>
+                ` : `<div style="text-align:right; font-size:9pt; margin-top:10px;">...Continued</div>`}
+            `;
+            container.appendChild(pageDiv);
+        }
     }
 
-    function updateMode() { 
-        mode = document.getElementById('examType').value; 
-        render(); 
-    }
+    function updateData(k, v) { students[activeIdx][k] = v; renderTable(); saveToDisk(); }
+    function saveToDisk() { localStorage.setItem(getStoreKey(), JSON.stringify(students)); }
+    function changeClass(v) { currentClass = v; activeIdx = 0; init(); }
+    function changeMode(v) { currentMode = v; activeIdx = 0; WEIGHT = (v === 'Final') ? 1.0 : 0.45; updatePercOptions(); init(); }
+    function changePerc(v) { PASS_THRESHOLD = parseFloat(v); updateLiveTotal(); renderTable(); }
+    function nav(d) { let next = activeIdx + d; if(next >= 0 && next < 100) load(next); }
+    function deleteWholeClass() { if(confirm("Clear class data?")) { localStorage.removeItem(getStoreKey()); activeIdx = 0; init(); } }
+    function clearCurrentRow() { students[activeIdx] = {n:'', f:'', m:Array(9).fill('')}; load(activeIdx); renderTable(); saveToDisk(); }
 
-    function exportExcel() {
-        let table = document.querySelector(".page").innerHTML;
-        let blob = new Blob(['<html><head><meta charset="utf-8"></head><body>' + table + '</body></html>'], {type: 'application/vnd.ms-excel'});
-        let a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'AwardList_' + currentClass + '.xls'; a.click();
-    }
-    window.onload = init;
+    window.onload = () => { updatePercOptions(); init(); };
 </script>
 </body>
 </html>
