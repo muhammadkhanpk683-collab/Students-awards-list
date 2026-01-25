@@ -70,7 +70,11 @@
             .a4-head { text-align: center; text-decoration: underline; font-size: 16pt; font-weight: 900; margin-bottom: 5px; text-transform: uppercase; }
             .a4-info-bar { display: flex; justify-content: space-between; font-weight: 900; font-size: 10pt; margin-bottom: 10px; border-bottom: 2px solid black; padding-bottom: 5px; }
             table { width: 100%; border-collapse: collapse; border: 2px solid black; table-layout: fixed; }
-            th, td { border: 1px solid black; text-align: center; padding: 3px; font-size: 8.5pt; font-weight: 900; height: 25px; overflow: hidden; }
+            
+            /* HIGHLIGHTED HEADINGS FOR PRINT */
+            th { background-color: #f2f2f2 !important; border: 1px solid black; text-align: center; padding: 3px; font-size: 8.5pt; font-weight: 900; height: 25px; -webkit-print-color-adjust: exact; }
+            
+            td { border: 1px solid black; text-align: center; padding: 3px; font-size: 8.5pt; font-weight: 900; height: 25px; overflow: hidden; }
             .fail-text { color: red !important; font-size: 7pt; display: block; line-height: 0.8; }
             .print-stats-bottom { font-weight: 900; font-size: 10pt; display: flex; justify-content: space-around; border-top: 1px dashed black; padding-top: 10px; margin-bottom: 40px; }
             .signature-row { display: flex; justify-content: space-around; }
@@ -78,11 +82,12 @@
         }
     </style>
 </head>
-<body><div class="no-print" style="max-width: 650px; margin: 20px auto; padding: 20px; background: #fff; border: 2px solid var(--zong-pink); border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.1);">
-    <h3 style="text-align: center; color: var(--zong-pink); font-family: sans-serif; margin-bottom: 20px;">
+<body>
+
+<div class="no-print" style="max-width: 650px; margin: 20px auto; padding: 20px; background: #fff; border: 2px solid #df1b77; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.1);">
+    <h3 style="text-align: center; color: #df1b77; font-family: sans-serif; margin-bottom: 20px;">
         System Preview: Input & Output
     </h3>
-    
     <svg viewBox="0 0 600 580" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: auto; background: white;">
         <text x="10" y="20" font-family="Arial" font-size="14" font-weight="bold" fill="#333">1. DIGITAL INPUT (Current Design)</text>
         <rect x="10" y="30" width="280" height="150" rx="10" fill="white" stroke="#df1b77" stroke-width="2"/>
@@ -113,8 +118,8 @@
 
         <text x="10" y="210" font-family="Arial" font-size="14" font-weight="bold" fill="#333">2. ORIGINAL PRINT OUTPUT (A4 Format)</text>
         <rect x="10" y="225" width="580" height="335" fill="white" stroke="black" stroke-width="1.5"/>
-        
         <text x="300" y="245" text-anchor="middle" font-family="Arial" font-size="12" font-weight="bold" text-decoration="underline">STUDENT AWARD LIST - 2026</text>
+        
         <g font-family="Arial" font-size="8" font-weight="bold">
             <text x="25" y="265">SCHOOL: G.P.S SALOBAIG</text>
             <text x="200" y="265">CLASS: KG</text>
@@ -123,11 +128,19 @@
         </g>
 
         <rect x="20" y="275" width="560" height="120" fill="none" stroke="black" stroke-width="1"/>
+        <rect x="20" y="275" width="560" height="25" fill="#e0e0e0" /> <line x1="20" y1="300" x2="580" y2="300" stroke="black" stroke-width="1"/>
         
-        <line x1="20" y1="300" x2="580" y2="300" stroke="black" stroke-width="1"/>
-
         <g stroke="black" stroke-width="1">
-            <line x1="50" y1="275" x2="50" y2="395"/> <line x1="140" y1="275" x2="140" y2="395"/> <line x1="230" y1="275" x2="230" y2="395"/> <line x1="260" y1="275" x2="260" y2="395" stroke-width="0.5"/> <line x1="290" y1="275" x2="290" y2="395" stroke-width="0.5"/> <line x1="320" y1="275" x2="320" y2="395" stroke-width="0.5"/> <line x1="350" y1="275" x2="350" y2="395" stroke-width="0.5"/> <line x1="380" y1="275" x2="380" y2="395" stroke-width="0.5"/> <line x1="520" y1="275" x2="520" y2="395"/> </g>
+            <line x1="50" y1="275" x2="50" y2="395"/> 
+            <line x1="140" y1="275" x2="140" y2="395"/> 
+            <line x1="230" y1="275" x2="230" y2="395"/> 
+            <line x1="260" y1="275" x2="260" y2="395" stroke-width="0.5"/> 
+            <line x1="290" y1="275" x2="290" y2="395" stroke-width="0.5"/> 
+            <line x1="320" y1="275" x2="320" y2="395" stroke-width="0.5"/> 
+            <line x1="350" y1="275" x2="350" y2="395" stroke-width="0.5"/> 
+            <line x1="380" y1="275" x2="380" y2="395" stroke-width="0.5"/> 
+            <line x1="520" y1="275" x2="520" y2="395"/> 
+        </g>
 
         <g font-family="Arial" font-size="7" font-weight="bold" text-anchor="middle">
             <text x="35" y="290">RN</text>
@@ -149,14 +162,18 @@
             <text x="550" y="318" text-anchor="middle" font-weight="bold">247</text>
             <line x1="20" y1="330" x2="580" y2="330" stroke="black" stroke-width="0.5"/>
             
-            <text x="35" y="350" text-anchor="middle">2</text>
-            <text x="55" y="350">Student B</text>
-            <text x="145" y="350">Father B</text>
-            <line x1="20" y1="362" x2="580" y2="362" stroke="black" stroke-width="0.5"/>
-            
-            <text x="35" y="382" text-anchor="middle">3</text>
-            <text x="55" y="382">Student C</text>
-            <text x="145" y="382">Father C</text>
+            <text x="35" y="348" text-anchor="middle">2</text>
+            <text x="55" y="348">Ayesha Khan</text>
+            <text x="145" y="348">Umar Khan</text>
+            <text x="245" y="348" text-anchor="middle">92</text>
+            <text x="550" y="348" text-anchor="middle" font-weight="bold">265</text>
+            <line x1="20" y1="360" x2="580" y2="360" stroke="black" stroke-width="0.5"/>
+
+            <text x="35" y="378" text-anchor="middle">3</text>
+            <text x="55" y="378">Bilal Raza</text>
+            <text x="145" y="378">Hassan Raza</text>
+            <text x="245" y="378" text-anchor="middle">78</text>
+            <text x="550" y="378" text-anchor="middle" font-weight="bold">230</text>
         </g>
 
         <g font-family="Arial" font-size="8" font-weight="bold">
@@ -165,15 +182,15 @@
             <text x="250" y="420">Fail: 0</text>
             <text x="350" y="420">Pass %: 100%</text>
         </g>
-        
+
         <line x1="50" y1="490" x2="180" y2="490" stroke="black"/>
         <text x="115" y="505" text-anchor="middle" font-family="Arial" font-size="10" font-weight="bold">Class Teacher</text>
-        
         <line x1="420" y1="490" x2="550" y2="490" stroke="black"/>
         <text x="485" y="505" text-anchor="middle" font-family="Arial" font-size="10" font-weight="bold">Head Master</text>
     </svg>
 </div>
-    
+
+
 
 <div class="app-view no-print">
     <div class="app-header">
@@ -273,9 +290,8 @@
             <button class="nav-btn" onclick="nav(1)">NEXT <i class="fas fa-chevron-right"></i></button>
         </div>
     </div>
-    
-        <div class="no-print" style="margin: 40px 15px; padding: 40px; background: #fff; border: 1px solid #d1d5db; border-radius: 8px; text-align: center; position: relative;">
-        
+
+    <div class="no-print" style="margin: 40px 15px; padding: 40px; background: #fff; border: 1px solid #d1d5db; border-radius: 8px; text-align: center; position: relative;">
         <h2 style="margin: 0; font-family: 'Times New Roman', serif; font-size: 28px; color: #1a1a1a; font-weight: 400;">Assalamualaikum</h2>
         <div style="width: 80px; height: 1.5px; background: #df1b77; margin: 20px auto;"></div>
 
@@ -286,15 +302,13 @@
             
             <p style="font-size: 14px; color: #576574; line-height: 1.6; text-align: justify; background: #f9fafb; padding: 20px; border-radius: 6px; border: 1px solid #f1f2f6;">
                 <strong>Respected Educator,</strong><br>
-                The integrity of this Award List is the foundation of our students' academic journey. As you finalize these records, please ensure that every entry reflects the true merit of the student. This digital portal is a humble contribution to support your noble mission in shaping the future of our nation.
+                The integrity of this Award List is the foundation of our students' academic journey. As you finalize these records, please ensure that every entry reflects the true merit of the student.
             </p>
         </div>
 
-        
-            <span style="display: block; font-size: 11px; color: #95a5a6; text-transform: uppercase; letter-spacing: 2px;">Developed with Respect by</span>
-            <strong style="font-size: 22px; color: #1a1a1a; font-family: 'Arial', sans-serif;">SAJJAD ALI</strong>
-            <p style="margin: 5px 0 0 0; font-size: 12px; color: #df1b77; font-weight: 600;">Educational Support & Technology</p>
-        </div>
+        <span style="display: block; font-size: 11px; color: #95a5a6; text-transform: uppercase; letter-spacing: 2px;">Developed with Respect by</span>
+        <strong style="font-size: 22px; color: #1a1a1a; font-family: 'Arial', sans-serif;">SAJJAD ALI</strong>
+        <p style="margin: 5px 0 0 0; font-size: 12px; color: #df1b77; font-weight: 600;">Educational Support & Technology</p>
     </div>
 
     <footer class="no-print" style="text-align: center; padding-bottom: 60px;">
@@ -302,11 +316,12 @@
             <i class="fab fa-whatsapp"></i> CONTACT FOR TECHNICAL ASSISTANCE
         </a>
     </footer>
-
+</div>
 
 <div id="dynamic-print-container"></div>
 
 <script>
+    /* Javascript logic exactly restored */
     let WEIGHT = 0.45, PASS_THRESHOLD = 0.33, currentMode = "1st", currentClass = "KG", activeIdx = 0, maxReachedIdx = 0, students = [];
 
     function clearAllSystemData() { if(confirm("DANGER: Delete All Classes data permanently?")) { localStorage.clear(); location.reload(); } }
@@ -389,11 +404,7 @@
         else { st.innerText = "FAIL"; st.style.backgroundColor = "var(--danger)"; }
     }
 
-    function downloadPDF() {
-        const schoolName = document.getElementById('edit-school').value.replace(/\s+/g, '_');
-        const originalTitle = document.title; document.title = `${schoolName}_Class_${currentClass}_AwardList`;
-        window.print(); setTimeout(() => { document.title = originalTitle; }, 1000);
-    }
+    function downloadPDF() { window.print(); }
 
     function exportToExcel() {
         const title = document.getElementById('edit-title').value;
@@ -412,32 +423,53 @@
         const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
         const link = document.createElement("a");
         link.href = URL.createObjectURL(blob);
-        link.setAttribute("download", `${school}_Class_${currentClass}_AwardList.csv`);
+        link.setAttribute("download", `${school}_Class_${currentClass}.csv`);
         link.click();
     }
 
-    function renderTable() {
-        let app = 0, pass = 0, fail = 0; const passLimit = getPassCriteria();
-        const studentsPerPage = 32; const filledStudents = students.slice(0, maxReachedIdx + 1);
-        filledStudents.forEach(s => {
+    /* Modified renderTable to handle dynamic filename */
+function renderTable() {
+    let app = 0, pass = 0, fail = 0; 
+    const passLimit = getPassCriteria();
+    const studentsPerPage = 32; 
+    const filledStudents = students.slice(0, maxReachedIdx + 1);
+    
+    // --- DYNAMIC FILENAME LOGIC ---
+    const schoolName = document.getElementById('edit-school').value;
+    document.title = `Class ${currentClass} ${schoolName}`; 
+    // ------------------------------
+
+    filledStudents.forEach(s => {
+        let total = s.m.reduce((a, b) => a + (parseFloat(b) || 0), 0);
+        if(s.n.trim() !== "" || total > 0) { app++; if(total >= passLimit) pass++; else fail++; }
+    });
+    
+    const container = document.getElementById('dynamic-print-container'); 
+    container.innerHTML = ''; 
+    
+    for (let i = 0; i < filledStudents.length; i += studentsPerPage) {
+        const chunk = filledStudents.slice(i, i + studentsPerPage);
+        const pageDiv = document.createElement('div'); 
+        pageDiv.className = 'print-page';
+        const subjects = getSubjects();
+        const tableRows = chunk.map((s, index) => {
             let total = s.m.reduce((a, b) => a + (parseFloat(b) || 0), 0);
-            if(s.n.trim() !== "" || total > 0) { app++; if(total >= passLimit) pass++; else fail++; }
-        });
-        const container = document.getElementById('dynamic-print-container'); container.innerHTML = ''; 
-        for (let i = 0; i < filledStudents.length; i += studentsPerPage) {
-            const chunk = filledStudents.slice(i, i + studentsPerPage);
-            const pageDiv = document.createElement('div'); pageDiv.className = 'print-page';
-            const subjects = getSubjects();
-            const tableRows = chunk.map((s, index) => {
-                let total = s.m.reduce((a, b) => a + (parseFloat(b) || 0), 0);
-                let isFail = (s.n.trim() !== "" || total > 0) && (total < passLimit);
-                return `<tr><td>${i+index+1}</td><td style="text-align:left">${s.n}</td><td style="text-align:left">${s.f}</td>${s.m.map((m, mi) => `<td>${isLocked(mi)?'-':(m||'')}</td>`).join('')}<td class="total-cell">${Math.round(total) || 0}${isFail ? '<span class="fail-text">FAIL</span>' : ''}</td></tr>`;
-            }).join('');
-            const isLastPage = (i + studentsPerPage >= filledStudents.length);
-            pageDiv.innerHTML = `<div class="a4-head">${document.getElementById('edit-title').value}</div><div class="a4-info-bar"><span>SCHOOL: ${document.getElementById('edit-school').value}</span><span>CLASS: ${currentClass}</span><span>SECTION: ${document.getElementById('sectionInp').value.toUpperCase()}</span><span>EXAM: ${currentMode === '1st' ? '1ST' : 'FINAL'} SEM</span></div><table><thead><tr><th>RN</th><th style="width:150px">STUDENT NAME</th><th style="width:150px">FATHER NAME</th>${subjects.map(s => `<th>${s}</th>`).join('')}<th class="total-cell">TOTAL</th></tr></thead><tbody>${tableRows}</tbody></table>${isLastPage ? `<div class="print-stats-bottom"><span>Students Appeared: ${app}</span><span>Pass: ${pass}</span><span>Fail: ${fail}</span><span>Pass %: ${app > 0 ? Math.round((pass/app)*100) : 0}%</span></div><div class="signature-row"><div class="sig-box">${document.getElementById('sig1-edit').value}</div><div class="sig-box">${document.getElementById('sig2-edit').value}</div>${["6TH", "7TH", "8TH"].includes(currentClass) ? `<div class="sig-box">${document.getElementById('sig3-edit').value}</div>` : ''}</div>` : `<div style="text-align:right; font-size:9pt; margin-top:10px; font-weight:bold;">Page ${Math.floor(i/studentsPerPage)+1} - Continued...</div>`}`;
-            container.appendChild(pageDiv);
-        }
+            let isFail = (s.n.trim() !== "" || total > 0) && (total < passLimit);
+            return `<tr>
+                        <td>${i+index+1}</td>
+                        <td style="text-align:center">${s.n}</td> 
+                        <td style="text-align:center">${s.f}</td>
+                        ${s.m.map((m, mi) => `<td>${isLocked(mi)?'-':(m||'')}</td>`).join('')}
+                        <td class="total-cell">${Math.round(total) || 0}${isFail ? '<span class="fail-text">FAIL</span>' : ''}</td>
+                    </tr>`;
+        }).join('');
+
+        const isLastPage = (i + studentsPerPage >= filledStudents.length);
+        pageDiv.innerHTML = `<div class="a4-head">${document.getElementById('edit-title').value}</div><div class="a4-info-bar"><span>SCHOOL: ${document.getElementById('edit-school').value}</span><span>CLASS: ${currentClass}</span><span>SECTION: ${document.getElementById('sectionInp').value.toUpperCase()}</span><span>EXAM: ${currentMode === '1st' ? '1ST' : 'FINAL'} SEM</span></div><table><thead><tr><th>RN</th><th style="width:150px">STUDENT NAME</th><th style="width:150px">FATHER NAME</th>${subjects.map(s => `<th>${s}</th>`).join('')}<th class="total-cell">TOTAL</th></tr></thead><tbody>${tableRows}</tbody></table>${isLastPage ? `<div class="print-stats-bottom"><span>Students Appeared: ${app}</span><span>Pass: ${pass}</span><span>Fail: ${fail}</span><span>Pass %: ${app > 0 ? Math.round((pass/app)*100) : 0}%</span></div><div class="signature-row"><div class="sig-box">${document.getElementById('sig1-edit').value}</div><div class="sig-box">${document.getElementById('sig2-edit').value}</div>${["6TH", "7TH", "8TH"].includes(currentClass) ? `<div class="sig-box">${document.getElementById('sig3-edit').value}</div>` : ''}</div>` : `<div style="text-align:right; font-size:9pt; margin-top:10px; font-weight:bold;">Page ${Math.floor(i/studentsPerPage)+1} - Continued...</div>`}`;
+        container.appendChild(pageDiv);
     }
+}
+
 
     function updateData(k, v) { students[activeIdx][k] = v; renderTable(); saveToDisk(); }
     function saveToDisk() { localStorage.setItem(getStoreKey(), JSON.stringify(students)); }
