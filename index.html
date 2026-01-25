@@ -78,7 +78,102 @@
         }
     </style>
 </head>
-<body>
+<body><div class="no-print" style="max-width: 650px; margin: 20px auto; padding: 20px; background: #fff; border: 2px solid var(--zong-pink); border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.1);">
+    <h3 style="text-align: center; color: var(--zong-pink); font-family: sans-serif; margin-bottom: 20px;">
+        System Preview: Input & Output
+    </h3>
+    
+    <svg viewBox="0 0 600 580" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: auto; background: white;">
+        <text x="10" y="20" font-family="Arial" font-size="14" font-weight="bold" fill="#333">1. DIGITAL INPUT (Current Design)</text>
+        <rect x="10" y="30" width="280" height="150" rx="10" fill="white" stroke="#df1b77" stroke-width="2"/>
+        <text x="25" y="55" font-family="Arial" font-size="10" font-weight="bold" fill="#df1b77">Roll No: 1</text>
+        <rect x="25" y="65" width="250" height="20" rx="4" fill="#f9f9f9" stroke="#ddd"/>
+        <text x="32" y="79" font-family="Arial" font-size="9" fill="#888">Student Name: Sajjad Ali</text>
+        
+        <g transform="translate(25, 100)">
+            <rect x="0" y="0" width="50" height="35" rx="5" fill="#fff0f6" stroke="#fcc2d7"/>
+            <text x="25" y="12" text-anchor="middle" font-family="Arial" font-size="8" font-weight="bold">ENG</text>
+            <text x="25" y="28" text-anchor="middle" font-family="Arial" font-size="12" font-weight="bold" fill="#df1b77">85</text>
+            
+            <rect x="60" y="0" width="50" height="35" rx="5" fill="#fff0f6" stroke="#fcc2d7"/>
+            <text x="85" y="12" text-anchor="middle" font-family="Arial" font-size="8" font-weight="bold">URD</text>
+            <text x="85" y="28" text-anchor="middle" font-family="Arial" font-size="12" font-weight="bold" fill="#df1b77">72</text>
+            
+            <rect x="120" y="0" width="50" height="35" rx="5" fill="#fff0f6" stroke="#fcc2d7"/>
+            <text x="145" y="12" text-anchor="middle" font-family="Arial" font-size="8" font-weight="bold">MAT</text>
+            <text x="145" y="28" text-anchor="middle" font-family="Arial" font-size="12" font-weight="bold" fill="#df1b77">90</text>
+        </g>
+
+        <path d="M300 100 Q 350 100, 350 200" stroke="#ccc" stroke-width="3" fill="none" stroke-dasharray="5" marker-end="url(#arrowhead)"/>
+        <defs>
+            <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="0" refY="3.5" orient="auto">
+                <polygon points="0 0, 10 3.5, 0 7" fill="#ccc" />
+            </marker>
+        </defs>
+
+        <text x="10" y="210" font-family="Arial" font-size="14" font-weight="bold" fill="#333">2. ORIGINAL PRINT OUTPUT (A4 Format)</text>
+        <rect x="10" y="225" width="580" height="335" fill="white" stroke="black" stroke-width="1.5"/>
+        
+        <text x="300" y="245" text-anchor="middle" font-family="Arial" font-size="12" font-weight="bold" text-decoration="underline">STUDENT AWARD LIST - 2026</text>
+        <g font-family="Arial" font-size="8" font-weight="bold">
+            <text x="25" y="265">SCHOOL: G.P.S SALOBAIG</text>
+            <text x="200" y="265">CLASS: KG</text>
+            <text x="320" y="265">SECTION: A</text>
+            <text x="450" y="265">EXAM: 1ST SEM</text>
+        </g>
+
+        <rect x="20" y="275" width="560" height="120" fill="none" stroke="black" stroke-width="1"/>
+        
+        <line x1="20" y1="300" x2="580" y2="300" stroke="black" stroke-width="1"/>
+
+        <g stroke="black" stroke-width="1">
+            <line x1="50" y1="275" x2="50" y2="395"/> <line x1="140" y1="275" x2="140" y2="395"/> <line x1="230" y1="275" x2="230" y2="395"/> <line x1="260" y1="275" x2="260" y2="395" stroke-width="0.5"/> <line x1="290" y1="275" x2="290" y2="395" stroke-width="0.5"/> <line x1="320" y1="275" x2="320" y2="395" stroke-width="0.5"/> <line x1="350" y1="275" x2="350" y2="395" stroke-width="0.5"/> <line x1="380" y1="275" x2="380" y2="395" stroke-width="0.5"/> <line x1="520" y1="275" x2="520" y2="395"/> </g>
+
+        <g font-family="Arial" font-size="7" font-weight="bold" text-anchor="middle">
+            <text x="35" y="290">RN</text>
+            <text x="95" y="290">STUDENT NAME</text>
+            <text x="185" y="290">FATHER NAME</text>
+            <text x="245" y="290">ENG</text>
+            <text x="275" y="290">URD</text>
+            <text x="305" y="290">MAT</text>
+            <text x="335" y="290">SCI</text>
+            <text x="365" y="290">ISL</text>
+            <text x="550" y="290">TOTAL</text>
+        </g>
+
+        <g font-family="Arial" font-size="8">
+            <text x="35" y="318" text-anchor="middle">1</text>
+            <text x="55" y="318">Sajjad Ali</text>
+            <text x="145" y="318">Ali Ahmad</text>
+            <text x="245" y="318" text-anchor="middle">85</text>
+            <text x="550" y="318" text-anchor="middle" font-weight="bold">247</text>
+            <line x1="20" y1="330" x2="580" y2="330" stroke="black" stroke-width="0.5"/>
+            
+            <text x="35" y="350" text-anchor="middle">2</text>
+            <text x="55" y="350">Student B</text>
+            <text x="145" y="350">Father B</text>
+            <line x1="20" y1="362" x2="580" y2="362" stroke="black" stroke-width="0.5"/>
+            
+            <text x="35" y="382" text-anchor="middle">3</text>
+            <text x="55" y="382">Student C</text>
+            <text x="145" y="382">Father C</text>
+        </g>
+
+        <g font-family="Arial" font-size="8" font-weight="bold">
+            <text x="25" y="420">Appeared: 3</text>
+            <text x="150" y="420">Pass: 3</text>
+            <text x="250" y="420">Fail: 0</text>
+            <text x="350" y="420">Pass %: 100%</text>
+        </g>
+        
+        <line x1="50" y1="490" x2="180" y2="490" stroke="black"/>
+        <text x="115" y="505" text-anchor="middle" font-family="Arial" font-size="10" font-weight="bold">Class Teacher</text>
+        
+        <line x1="420" y1="490" x2="550" y2="490" stroke="black"/>
+        <text x="485" y="505" text-anchor="middle" font-family="Arial" font-size="10" font-weight="bold">Head Master</text>
+    </svg>
+</div>
+    
 
 <div class="app-view no-print">
     <div class="app-header">
